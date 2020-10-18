@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" style="-fx-background-color: #2A9246;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GetBetter.MyCalendarController">
+   <children>
+      <GridPane prefHeight="650.0" prefWidth="600.0" style="-fx-background-color: #ACF2B3;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="61.0" text="Rok" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Calibri Bold" size="22.0" />
+               </font></Label>
+            <Button fx:id="daybutton36" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.rowIndex="7">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton37" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="3" GridPane.rowIndex="7">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton38" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="4" GridPane.rowIndex="7">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton39" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="5" GridPane.rowIndex="7">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton40" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="6" GridPane.rowIndex="7">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton41" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="7" GridPane.rowIndex="7">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton42" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="8" GridPane.rowIndex="7">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton1" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton2" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton3" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="4" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton4" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="5" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton5" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="6" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton6" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="7" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton7" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="8" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton8" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton9" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton10" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="4" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton11" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="5" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton12" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="6" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton13" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="7" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton14" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="8" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton15" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton16" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton17" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="4" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton18" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="5" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton19" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="6" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton20" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="7" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton21" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="8" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton22" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton23" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="3" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton24" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="4" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton25" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="5" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton26" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="6" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton27" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="7" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton28" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="8" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton29" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton35" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="8" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton34" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="7" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton33" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="6" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton32" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="5" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton31" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="4" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="daybutton30" alignment="CENTER" mnemonicParsing="false" onAction="#handleDayClick" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: GREEN; -fx-border-radius: 15; -fx-border-width: 2;" text="Day 1" textOverrun="CLIP" GridPane.columnIndex="3" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Button>
+            <Label alignment="CENTER" prefHeight="63.0" prefWidth="303.0" text="Miesiąc" GridPane.columnIndex="3" GridPane.columnSpan="4">
+               <font>
+                  <Font name="Calibri Bold" size="36.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="62.0" prefWidth="60.0" text="Monday" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="64.0" prefWidth="61.0" text="Tuesday" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="64.0" prefWidth="61.0" text="Wensday" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="63.0" prefWidth="61.0" text="Thursday" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="5" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="71.0" prefWidth="59.0" text="Friday" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="6" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="65.0" prefWidth="61.0" text="Saturday" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="7" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="65.0" prefWidth="62.0" text="Sunday" textAlignment="CENTER" textOverrun="CLIP" GridPane.columnIndex="8" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Calibri Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <Accordion layoutX="600.0" layoutY="-1.0" prefHeight="650.0" prefWidth="600.0">
+        <panes>
+          <TitledPane animated="false" prefHeight="555.0" prefWidth="583.0" text="Plan Dnia">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane prefHeight="530.0" prefWidth="524.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Lista zadań">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView prefHeight="534.0" prefWidth="524.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Notatki">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea layoutX="14.0" layoutY="38.0" prefHeight="480.0" prefWidth="497.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+        </panes>
+      </Accordion>
+   </children>
+</AnchorPane>
