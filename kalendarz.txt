@@ -1,9 +1,9 @@
 Date;2019-10-13
 Date;2019-10-14
 nazwa;opis;8;2020-10-13;false;0;
-Podzadanie;                                     nazwaPodzadania1;opisPodzadania1;2;2020-10-13;false;0;;
-Podzadanie;                                     nazwaPodzadania2;opisPodzadania2;2;2020-10-13;false;0;;
-Podzadanie;                                     nazwaPodzadania3;opisPodzadania3;2;2020-10-13;false;0;;
+Podzadanie;                                      nazwaPodzadania1;opisPodzadania1;2;2020-10-13;false;0;;
+Podzadanie;                                      nazwaPodzadania2;opisPodzadania2;2;2020-10-13;false;0;;
+Podzadanie;                                      nazwaPodzadania3;opisPodzadania3;2;2020-10-13;false;0;;
 Date;2019-10-15
 Date;2019-10-16
 Date;2019-10-17

@@ -19,7 +19,7 @@ public class MyCalendar {
     public static List<MyDay> getDays() {
         return days;
     }
-    
+
     public static MyDay getSelectedDay() {
         return selectedDay;
     }
@@ -91,8 +91,7 @@ public class MyCalendar {
                     startDate = startDate.plusDays(1);
                 }
             }
-            
-             selectedDay =  days.get(getDayIndex(LocalDate.now()));
+            selectedDay =  days.get(getDayIndex(LocalDate.now()));
 
         } catch (IOException e) {
             System.out.println("Problem przy odczytywaniu pliku zadania.txt: " + e.getMessage() + "\n Stacktrace: ");
