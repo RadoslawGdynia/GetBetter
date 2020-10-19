@@ -1,14 +1,17 @@
 package GetBetter;
 
 import GetBetter.Kalendarz.MyCalendar;
-import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.time.LocalDate;
 import java.time.format.TextStyle;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class MyCalendarController {
 
@@ -22,6 +25,8 @@ public class MyCalendarController {
     Label monthName;
     @FXML
     Label yearNumber;
+    @FXML
+    Accordion taskAccordion;
 
     @FXML
     Button dayButton1;
@@ -108,10 +113,18 @@ public class MyCalendarController {
     @FXML
     Button dayButton42;
 
+    @FXML
+    Button addTaskButton;
+    @FXML
+    Button editTaskButton;
+    @FXML
+    Button cancelTaskButton;
+
 
     
 
     public void initialize() {
+        taskAccordion.setDisable(true);
 
         dayButtonList.add(dayButton1);
         dayButtonList.add(dayButton2);
@@ -174,22 +187,28 @@ public class MyCalendarController {
                 dayNumeration++;
             }else {
                 dayButtonList.get(i-1).setText("");
+                dayButtonList.get(i-1).setDisable(true);
+
 
             }
         }
-        System.out.println("tekst z przycisku 10: " +dayButton10.getText());
-
-
-
-
-
-
     }
 
 
-    public void handleDayClick() {
-        Platform.exit();
+    public void handleDayClick(ActionEvent e) {
+        Button chosenButton = (Button) e.getSource();
+        LocalDate chosenDay = LocalDate.of(currentYearNum,currentMonthNum,Integer.parseInt(chosenButton.getText()));
+        MyCalendar.setSelectedDay(MyCalendar.getDays().get(MyCalendar.getDayIndex(chosenDay))); //not needed?
+        taskAccordion.setDisable(false);
+    }
+
+    public void handleAddTaskClick(ActionEvent event) {
 
     }
 
+    public void handleEditTaskClick(ActionEvent event) {
+    }
+
+    public void handleCancelTaskClick(ActionEvent event) {
+    }
 }

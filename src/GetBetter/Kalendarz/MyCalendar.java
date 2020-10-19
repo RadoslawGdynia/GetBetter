@@ -1,14 +1,17 @@
 package GetBetter.Kalendarz;
 
-import java.io.*;
+import GetBetter.DoZrobienia.Task;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import GetBetter.DoZrobienia.*;
 
 public class MyCalendar {
     private static List<MyDay> days;
@@ -22,6 +25,10 @@ public class MyCalendar {
 
     public static MyDay getSelectedDay() {
         return selectedDay;
+    }
+
+    public static void setSelectedDay(MyDay selectedDay) {
+        MyCalendar.selectedDay = selectedDay;
     }
 
     public static int getDayIndex(LocalDate date) {
