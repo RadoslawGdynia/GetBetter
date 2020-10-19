@@ -1,7 +1,7 @@
 package GetBetter;
 
-import GetBetter.Kalendarz.MyCalendar;
 import GetBetter.DoZrobienia.Task;
+import GetBetter.Kalendarz.MyCalendar;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +35,8 @@ public class MyCalendarController {
     Accordion taskAccordion;
     @FXML
     Label showDay;
+    @FXML
+    ListView<Task> showTasksList;
 
     @FXML
     Button dayButton1;
@@ -209,11 +211,13 @@ public class MyCalendarController {
         MyCalendar.setSelectedDay(MyCalendar.getDays().get(MyCalendar.getDayIndex(chosenDay)));
         taskAccordion.setDisable(false);
         showDay.setText("View for of the day: " + chosenDay.toString());
+        showTasksList.setItems(MyCalendar.getDays().get(MyCalendar.getDayIndex(chosenDay)).getTodaysTasks());
+
     }
 
     public void handleAddTaskClick(ActionEvent event) {
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.initOwner(mainPane.getScene().getWindow());
+        //dialog.initOwner(mainPane.getScene().getWindow());
         dialog.setTitle("Addition of task to the day: " + MyCalendar.getSelectedDay());
         FXMLLoader fxmlLoader= new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("Kalendarz/AddTaskDialog.fxml"));

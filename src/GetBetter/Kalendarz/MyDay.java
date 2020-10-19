@@ -1,6 +1,8 @@
 package GetBetter.Kalendarz;
 
 import GetBetter.DoZrobienia.Task;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,8 +22,10 @@ public class MyDay {
         return date;
     }
 
-    public List<Task> getTodaysTasks() {
-        return todaysTasks;
+    public ObservableList<Task> getTodaysTasks() {
+        ObservableList<Task> viewTodaysTasks = FXCollections.observableArrayList();
+        viewTodaysTasks.addAll(todaysTasks);
+        return viewTodaysTasks;
     }
     private boolean findTask(Task szukane) {
         for(Task task : todaysTasks) {

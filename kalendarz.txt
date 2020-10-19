@@ -1,10 +1,10 @@
-
+Date;2019-10-12
 Date;2019-10-13
 Date;2019-10-14
 nazwa;opis;8;2020-10-13;false;0;
-Podzadanie;                                                    nazwaPodzadania1;opisPodzadania1;2;2020-10-13;false;0;;
-Podzadanie;                                                    nazwaPodzadania2;opisPodzadania2;2;2020-10-13;false;0;;
-Podzadanie;                                                    nazwaPodzadania3;opisPodzadania3;2;2020-10-13;false;0;;
+Podzadanie;                                                        nazwaPodzadania1;opisPodzadania1;2;2020-10-13;false;0;;
+Podzadanie;                                                        nazwaPodzadania2;opisPodzadania2;2;2020-10-13;false;0;;
+Podzadanie;                                                        nazwaPodzadania3;opisPodzadania3;2;2020-10-13;false;0;;
 Date;2019-10-15
 Date;2019-10-16
 Date;2019-10-17
@@ -380,6 +380,7 @@ Date;2020-10-19
 Date;2020-10-20
 Date;2020-10-21
 Date;2020-10-22
+NewTask3;Details of NewTask3;1;2020-10-25;false;0;
 Date;2020-10-23
 Date;2020-10-24
 Date;2020-10-25
@@ -389,6 +390,7 @@ Date;2020-10-28
 Date;2020-10-29
 Date;2020-10-30
 Date;2020-10-31
+NewTask2;NewTask2 description;1;2020-10-31;false;0;
 Date;2020-11-01
 Date;2020-11-02
 Date;2020-11-03

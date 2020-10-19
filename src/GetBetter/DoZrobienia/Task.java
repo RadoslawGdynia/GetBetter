@@ -1,7 +1,13 @@
 package GetBetter.DoZrobienia;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -66,8 +72,10 @@ public class Task implements Comparable<Task> {
         return finalised;
     }
 
-    public List<Task> getSubtasks() {
-        return this.subtasks;
+    public ObservableList<Task> getSubtasks() {
+        ObservableList<Task> viewSubtasks = FXCollections.observableArrayList();
+        viewSubtasks.addAll(subtasks);
+        return viewSubtasks;
     }
 
     public int getDeadlineChangeCounter() {
@@ -232,13 +240,7 @@ public class Task implements Comparable<Task> {
     public int compareTo(Task o) {
         int timeForThis = LocalDate.now().compareTo(this.getDeadline());
         int timeForO = LocalDate.now().compareTo(o.getDeadline());
-        if (timeForThis>timeForO) {
-            return 1;
-        } else if(timeForThis==timeForO){
-            return 0;
-        } else{
-            return -1;
-        }
+        return Integer.compare(timeForThis, timeForO);
     }
 
     /**
