@@ -3,6 +3,7 @@ package GetBetter;
 import GetBetter.DoZrobienia.Task;
 import GetBetter.Kalendarz.MyCalendar;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -215,15 +216,13 @@ public class MyCalendarController {
 
     }
 
-    public void handleAddTaskClick(ActionEvent event) {
+    public void handleAddTaskClick() {
         Dialog<ButtonType> dialog = new Dialog<>();
-        //dialog.initOwner(mainPane.getScene().getWindow());
         dialog.setTitle("Addition of task to the day: " + MyCalendar.getSelectedDay());
         FXMLLoader fxmlLoader= new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("Kalendarz/AddTaskDialog.fxml"));
 
         try {
-
             dialog.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e) {
             System.out.println("Could not load the dialog");
@@ -248,5 +247,23 @@ public class MyCalendarController {
     }
 
     public void handleCancelTaskClick(ActionEvent event) {
+        EventHandler<ActionEvent> delete = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Task taskToCancel = showTasksList.getSelectionModel().getSelectedItem();
+                deleteTask(taskToCancel);
+            }
+        };
+    }
+    public void deleteTask(Task t) {
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setTitle("Task deletion");
+            a.setHeaderText("You intend to delete task: " + t.getTaskName());
+            a.setContentText("Are you sure you want to proceed? This operation is irreversible and you put this task in for a good reason");
+            Optional<ButtonType> result = a.showAndWait();
+
+            if(result.isPresent() && result.get()==ButtonType.OK) {
+                MyCalendar.getDays().get(MyCalendar.getDayIndex(MyCalendar.getSelectedDay().getDate())).getTodaysTasks().remove(t);
+        }
     }
 }
