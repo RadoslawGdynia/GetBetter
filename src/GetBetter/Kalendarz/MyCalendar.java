@@ -15,7 +15,7 @@ import java.util.List;
 
 public class MyCalendar {
     private static List<MyDay> days;
-    private static String savingFile = "kalendarz.txt";
+    private static final String savingFile = "kalendarz.txt";
     private static MyDay selectedDay;
 
 

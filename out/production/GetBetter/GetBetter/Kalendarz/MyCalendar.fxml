@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" style="-fx-background-color: #2A9246;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GetBetter.MyCalendarController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" style="-fx-background-color: #2A9246;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GetBetter.MyCalendarController">
    <children>
       <GridPane prefHeight="650.0" prefWidth="600.0" style="-fx-background-color: #ACF2B3;">
         <columnConstraints>
@@ -301,7 +300,7 @@
                      <children>
                         <BorderPane prefHeight="530.0" prefWidth="524.0">
                            <top>
-                              <Label text="Label" BorderPane.alignment="CENTER" />
+                              <Label fx:id="showDay" text="LABEL" BorderPane.alignment="CENTER" />
                            </top>
                            <right>
                               <VBox alignment="CENTER" prefHeight="511.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER">

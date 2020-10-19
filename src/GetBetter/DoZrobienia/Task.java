@@ -15,7 +15,7 @@ public class Task implements Comparable<Task> {
     private int pointValue;
     private LocalDate deadline;
     private boolean finalised; //weryfikuje czy już zrobione czy nie - checkbox w javaFX
-    private List<Task> subtasks;
+    private final List<Task> subtasks;
     private int deadlineChangeCounter;
 
 
@@ -201,7 +201,7 @@ public class Task implements Comparable<Task> {
                 }
             }
         } catch(ConcurrentModificationException e) {
-            System.out.println("");
+            System.out.println();
             // Metoda wywołuje ConcurrentModificationException ponieważ wykorzystuje iterację do wyszukania elementu do skasowania,
             //przeprowadzenie operacji skasowania powoduje zmianę zasięgu iteracji w związku z czym iterator głupieje
         } catch(Exception e) {

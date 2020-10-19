@@ -1,17 +1,20 @@
 package GetBetter;
 
 import GetBetter.Kalendarz.MyCalendar;
+import GetBetter.DoZrobienia.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 public class MyCalendarController {
 
@@ -20,6 +23,9 @@ public class MyCalendarController {
     int currentYearNum;
     int currentDayNum;
 
+    @FXML
+    AnchorPane mainPane;
+
 
     @FXML
     Label monthName;
@@ -27,6 +33,8 @@ public class MyCalendarController {
     Label yearNumber;
     @FXML
     Accordion taskAccordion;
+    @FXML
+    Label showDay;
 
     @FXML
     Button dayButton1;
@@ -198,11 +206,37 @@ public class MyCalendarController {
     public void handleDayClick(ActionEvent e) {
         Button chosenButton = (Button) e.getSource();
         LocalDate chosenDay = LocalDate.of(currentYearNum,currentMonthNum,Integer.parseInt(chosenButton.getText()));
-        MyCalendar.setSelectedDay(MyCalendar.getDays().get(MyCalendar.getDayIndex(chosenDay))); //not needed?
+        MyCalendar.setSelectedDay(MyCalendar.getDays().get(MyCalendar.getDayIndex(chosenDay)));
         taskAccordion.setDisable(false);
+        showDay.setText("View for of the day: " + chosenDay.toString());
     }
 
     public void handleAddTaskClick(ActionEvent event) {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(mainPane.getScene().getWindow());
+        dialog.setTitle("Addition of task to the day: " + MyCalendar.getSelectedDay());
+        FXMLLoader fxmlLoader= new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("Kalendarz/AddTaskDialog.fxml"));
+
+        try {
+
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        } catch (IOException e) {
+            System.out.println("Could not load the dialog");
+            e.printStackTrace();
+            return;
+        }
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
+        Optional<ButtonType> result = dialog.showAndWait();
+        if(result.isPresent() && result.get()==ButtonType.OK) {
+            AddTaskDialog newTaskToAdd = fxmlLoader.getController();
+            Task toAdd = newTaskToAdd.createTask();
+            MyCalendar.getDays().get(MyCalendar.getDayIndex(MyCalendar.getSelectedDay().getDate())).addTask(toAdd);
+        }
+
+
 
     }
 
