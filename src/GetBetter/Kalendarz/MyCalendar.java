@@ -1,27 +1,34 @@
 package GetBetter.Kalendarz;
 
-import java.io.*;
+import GetBetter.DoZrobienia.Task;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import GetBetter.DoZrobienia.*;
 
 public class MyCalendar {
     private static List<MyDay> days;
-    private static String savingFile = "kalendarz.txt";
+    private static final String savingFile = "kalendarz.txt";
     private static MyDay selectedDay;
 
 
     public static List<MyDay> getDays() {
         return days;
     }
-    
+
     public static MyDay getSelectedDay() {
         return selectedDay;
+    }
+
+    public static void setSelectedDay(MyDay selectedDay) {
+        MyCalendar.selectedDay = selectedDay;
     }
 
     public static int getDayIndex(LocalDate date) {
@@ -91,8 +98,7 @@ public class MyCalendar {
                     startDate = startDate.plusDays(1);
                 }
             }
-            
-             selectedDay =  days.get(getDayIndex(LocalDate.now()));
+            selectedDay =  days.get(getDayIndex(LocalDate.now()));
 
         } catch (IOException e) {
             System.out.println("Problem przy odczytywaniu pliku zadania.txt: " + e.getMessage() + "\n Stacktrace: ");

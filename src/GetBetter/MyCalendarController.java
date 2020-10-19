@@ -1,19 +1,40 @@
 package GetBetter;
 
-import javafx.application.Platform;
+import GetBetter.Kalendarz.MyCalendar;
+import GetBetter.DoZrobienia.Task;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 public class MyCalendarController {
 
-List<Button> dayButtonList = new ArrayList<>();
+    List<Button> dayButtonList = new ArrayList<>();
     int currentMonthNum;
     int currentYearNum;
     int currentDayNum;
+
+    @FXML
+    AnchorPane mainPane;
 
 
     @FXML
     Label monthName;
     @FXML
     Label yearNumber;
+    @FXML
+    Accordion taskAccordion;
+    @FXML
+    Label showDay;
 
     @FXML
     Button dayButton1;
@@ -100,10 +121,18 @@ List<Button> dayButtonList = new ArrayList<>();
     @FXML
     Button dayButton42;
 
+    @FXML
+    Button addTaskButton;
+    @FXML
+    Button editTaskButton;
+    @FXML
+    Button cancelTaskButton;
+
 
     
 
     public void initialize() {
+        taskAccordion.setDisable(true);
 
         dayButtonList.add(dayButton1);
         dayButtonList.add(dayButton2);
@@ -166,21 +195,54 @@ List<Button> dayButtonList = new ArrayList<>();
                 dayNumeration++;
             }else {
                 dayButtonList.get(i-1).setText("");
+                dayButtonList.get(i-1).setDisable(true);
+
 
             }
         }
-        System.out.println("tekst z przycisku 10: " +dayButton10.getText());
+    }
 
 
+    public void handleDayClick(ActionEvent e) {
+        Button chosenButton = (Button) e.getSource();
+        LocalDate chosenDay = LocalDate.of(currentYearNum,currentMonthNum,Integer.parseInt(chosenButton.getText()));
+        MyCalendar.setSelectedDay(MyCalendar.getDays().get(MyCalendar.getDayIndex(chosenDay)));
+        taskAccordion.setDisable(false);
+        showDay.setText("View for of the day: " + chosenDay.toString());
+    }
 
+    public void handleAddTaskClick(ActionEvent event) {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(mainPane.getScene().getWindow());
+        dialog.setTitle("Addition of task to the day: " + MyCalendar.getSelectedDay());
+        FXMLLoader fxmlLoader= new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("Kalendarz/AddTaskDialog.fxml"));
+
+        try {
+
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        } catch (IOException e) {
+            System.out.println("Could not load the dialog");
+            e.printStackTrace();
+            return;
+        }
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
+        Optional<ButtonType> result = dialog.showAndWait();
+        if(result.isPresent() && result.get()==ButtonType.OK) {
+            AddTaskDialog newTaskToAdd = fxmlLoader.getController();
+            Task toAdd = newTaskToAdd.createTask();
+            MyCalendar.getDays().get(MyCalendar.getDayIndex(MyCalendar.getSelectedDay().getDate())).addTask(toAdd);
+        }
 
 
 
     }
 
+    public void handleEditTaskClick(ActionEvent event) {
+    }
 
-    public void handleDayClick() {
-        Platform.exit();
-
+    public void handleCancelTaskClick(ActionEvent event) {
     }
 }

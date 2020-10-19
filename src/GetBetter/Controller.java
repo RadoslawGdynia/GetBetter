@@ -27,7 +27,7 @@ public class Controller implements Initializable {
             Stage calendarStage = new Stage();
             FXMLLoader calendarLoader = new FXMLLoader();
             Pane root = calendarLoader.load(getClass().getResource("Kalendarz/MyCalendar.fxml").openStream());
-            calendarStage.setScene(new Scene(root,900, 500));
+            calendarStage.setScene(new Scene(root,1200, 650));
             calendarStage.setTitle("Kalendarz");
             calendarStage.show();
         }
@@ -42,7 +42,7 @@ public class Controller implements Initializable {
             Stage diaryStage = new Stage();
             FXMLLoader diaryLoader = new FXMLLoader();
             Pane root = diaryLoader.load(getClass().getResource("Dziennik/MyDiary.fxml").openStream());
-            diaryStage.setScene(new Scene(root,900, 500));
+            diaryStage.setScene(new Scene(root,800, 500));
             diaryStage.setTitle("Dziennik");
             diaryStage.show();
         }

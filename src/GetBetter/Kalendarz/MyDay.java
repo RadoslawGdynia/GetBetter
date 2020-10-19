@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class MyDay {
     private final LocalDate date;
-    private List<Task> todaysTasks;
+    private final List<Task> todaysTasks;
 
     public MyDay(LocalDate date) {
         this.date = date;

@@ -5,9 +5,9 @@
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0" prefWidth="408.0" spacing="4.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GetBetter.Controller">
    <children>
-      <Button fx:id="calendarButton" alignment="BASELINE_CENTER" defaultButton="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleCalendarButtonClick" prefHeight="70.0" prefWidth="400.0" text="Kalendarz" />
-      <Button fx:id="diaryButton" alignment="BASELINE_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleDiaryButtonClick" prefHeight="70.0" prefWidth="400.0" text="Dziennik" />
-      <Button alignment="BASELINE_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="400.0" text="Lista nagród" />
-      <Button alignment="BASELINE_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleExitButtonClick" prefHeight="70.0" prefWidth="400.0" text="Wyjście" />
+      <Button fx:id="calendarButton" alignment="BASELINE_CENTER" defaultButton="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleCalendarButtonClick" prefHeight="70.0" prefWidth="400.0" text="Calendar" />
+      <Button fx:id="diaryButton" alignment="BASELINE_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleDiaryButtonClick" prefHeight="70.0" prefWidth="400.0" text="Diary" />
+      <Button alignment="BASELINE_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="70.0" prefWidth="400.0" text="Goals" />
+      <Button alignment="BASELINE_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleExitButtonClick" prefHeight="70.0" prefWidth="400.0" text="Exit" />
    </children>
 </VBox>
