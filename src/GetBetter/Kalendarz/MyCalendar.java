@@ -1,6 +1,8 @@
 package GetBetter.Kalendarz;
 
 import GetBetter.DoZrobienia.Task;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -19,8 +21,10 @@ public class MyCalendar {
     private static MyDay selectedDay;
 
 
-    public static List<MyDay> getDays() {
-        return days;
+    public static ObservableList<MyDay> getDays() {
+        ObservableList<MyDay> viewDays = FXCollections.observableArrayList();
+        viewDays.addAll(days);
+        return viewDays;
     }
 
     public static MyDay getSelectedDay() {
@@ -51,7 +55,7 @@ public class MyCalendar {
         return 0;
     }
 
-    public static void saveCalendar() { //NIEPEŁNY ZAPIS DANYCH - brak danych o zadaniach
+    public static void saveCalendar() {
 
         try (BufferedWriter bufwrit = new BufferedWriter(new FileWriter(savingFile))) {
 
@@ -98,6 +102,14 @@ public class MyCalendar {
                     startDate = startDate.plusDays(1);
                 }
             }
+            if(days.get(days.size()-1).getDate().isBefore(LocalDate.now().plusYears(1))){
+                LocalDate date = days.get(days.size()-1).getDate().plusDays(1);
+                while(days.get(days.size()-1).getDate().isBefore(LocalDate.now().plusYears(1))){
+                    days.add(new MyDay(date));
+                    date = date.plusDays(1);
+                }
+            }
+
             selectedDay =  days.get(getDayIndex(LocalDate.now()));
 
         } catch (IOException e) {

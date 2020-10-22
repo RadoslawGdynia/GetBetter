@@ -1,12 +1,15 @@
 package GetBetter;
 
-import GetBetter.Kalendarz.MyCalendar;
 import GetBetter.DoZrobienia.Task;
+import GetBetter.Kalendarz.MyCalendar;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -35,6 +38,8 @@ public class MyCalendarController {
     Accordion taskAccordion;
     @FXML
     Label showDay;
+    @FXML
+    ListView<Task> showTasksList;
 
     @FXML
     Button dayButton1;
@@ -207,19 +212,46 @@ public class MyCalendarController {
         Button chosenButton = (Button) e.getSource();
         LocalDate chosenDay = LocalDate.of(currentYearNum,currentMonthNum,Integer.parseInt(chosenButton.getText()));
         MyCalendar.setSelectedDay(MyCalendar.getDays().get(MyCalendar.getDayIndex(chosenDay)));
-        taskAccordion.setDisable(false);
         showDay.setText("View for of the day: " + chosenDay.toString());
+        taskAccordion.setDisable(false);
+
+        showTasksList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        showTasksList.setCellFactory(new Callback<>() {
+            @Override
+            public ListCell<Task> call(ListView<Task> taskListView) {
+                return new ListCell<>() {
+                    @Override
+                    protected void updateItem(Task task, boolean b) {
+                        super.updateItem(task, b);
+                        if (b) {
+                            setText(null);
+                        } else {
+                            setText(task.getTaskName());
+                            if (task.getDeadline().isEqual(LocalDate.now())) {
+                                setTextFill(Color.DARKRED);
+                            } else if (task.getDeadline().isAfter(task.getDeadline().minusDays(3)) && task.getDeadline().isBefore(task.getDeadline())) {
+                                setTextFill(Color.DARKGOLDENROD);
+                            } else {
+                                setTextFill(Color.DARKGREEN);
+                            }
+                        }
+                    }
+                };
+            }
+        });
+
+        showTasksList.setItems(MyCalendar.getDays().get(MyCalendar.getDayIndex(chosenDay)).getTodaysTasks());
+        showTasksList.getSelectionModel().selectFirst();
+
     }
 
-    public void handleAddTaskClick(ActionEvent event) {
+    public void handleAddTaskClick() {
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.initOwner(mainPane.getScene().getWindow());
         dialog.setTitle("Addition of task to the day: " + MyCalendar.getSelectedDay());
         FXMLLoader fxmlLoader= new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("Kalendarz/AddTaskDialog.fxml"));
 
         try {
-
             dialog.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e) {
             System.out.println("Could not load the dialog");
@@ -241,8 +273,24 @@ public class MyCalendarController {
     }
 
     public void handleEditTaskClick(ActionEvent event) {
+        System.out.println("Editing task is a work in progress. Wait patiently");
     }
 
     public void handleCancelTaskClick(ActionEvent event) {
+        EventHandler<ActionEvent> delete = event1 -> {
+            Task taskToCancel = showTasksList.getSelectionModel().getSelectedItem();
+            deleteTask(taskToCancel);
+        };
+    }
+    public void deleteTask(Task t) {
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setTitle("Task deletion");
+            a.setHeaderText("You intend to delete task: " + t.getTaskName());
+            a.setContentText("Are you sure you want to proceed? This operation is irreversible and you put this task in for a good reason");
+            Optional<ButtonType> result = a.showAndWait();
+
+            if(result.isPresent() && result.get()==ButtonType.OK) {
+                MyCalendar.getDays().get(MyCalendar.getDayIndex(MyCalendar.getSelectedDay().getDate())).getTodaysTasks().remove(t);
+        }
     }
 }
