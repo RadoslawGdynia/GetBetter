@@ -216,21 +216,20 @@ public class MyCalendarController {
         taskAccordion.setDisable(false);
 
         showTasksList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        showTasksList.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
+        showTasksList.setCellFactory(new Callback<>() {
             @Override
             public ListCell<Task> call(ListView<Task> taskListView) {
-                ListCell<Task> cell = new ListCell<>() {
+                return new ListCell<>() {
                     @Override
                     protected void updateItem(Task task, boolean b) {
                         super.updateItem(task, b);
-                        if(b){
+                        if (b) {
                             setText(null);
-                        }
-                        else {
+                        } else {
                             setText(task.getTaskName());
-                            if(task.getDeadline().isEqual(LocalDate.now())) {
+                            if (task.getDeadline().isEqual(LocalDate.now())) {
                                 setTextFill(Color.DARKRED);
-                            } else if(task.getDeadline().isAfter(task.getDeadline().minusDays(3)) && task.getDeadline().isBefore(task.getDeadline())) {
+                            } else if (task.getDeadline().isAfter(task.getDeadline().minusDays(3)) && task.getDeadline().isBefore(task.getDeadline())) {
                                 setTextFill(Color.DARKGOLDENROD);
                             } else {
                                 setTextFill(Color.DARKGREEN);
@@ -238,7 +237,6 @@ public class MyCalendarController {
                         }
                     }
                 };
-                return cell;
             }
         });
 
@@ -279,12 +277,9 @@ public class MyCalendarController {
     }
 
     public void handleCancelTaskClick(ActionEvent event) {
-        EventHandler<ActionEvent> delete = new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Task taskToCancel = showTasksList.getSelectionModel().getSelectedItem();
-                deleteTask(taskToCancel);
-            }
+        EventHandler<ActionEvent> delete = event1 -> {
+            Task taskToCancel = showTasksList.getSelectionModel().getSelectedItem();
+            deleteTask(taskToCancel);
         };
     }
     public void deleteTask(Task t) {
