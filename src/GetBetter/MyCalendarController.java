@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -210,9 +212,38 @@ public class MyCalendarController {
         Button chosenButton = (Button) e.getSource();
         LocalDate chosenDay = LocalDate.of(currentYearNum,currentMonthNum,Integer.parseInt(chosenButton.getText()));
         MyCalendar.setSelectedDay(MyCalendar.getDays().get(MyCalendar.getDayIndex(chosenDay)));
-        taskAccordion.setDisable(false);
         showDay.setText("View for of the day: " + chosenDay.toString());
+        taskAccordion.setDisable(false);
+
+        showTasksList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        showTasksList.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
+            @Override
+            public ListCell<Task> call(ListView<Task> taskListView) {
+                ListCell<Task> cell = new ListCell<>() {
+                    @Override
+                    protected void updateItem(Task task, boolean b) {
+                        super.updateItem(task, b);
+                        if(b){
+                            setText(null);
+                        }
+                        else {
+                            setText(task.getTaskName());
+                            if(task.getDeadline().isEqual(LocalDate.now())) {
+                                setTextFill(Color.DARKRED);
+                            } else if(task.getDeadline().isAfter(task.getDeadline().minusDays(3)) && task.getDeadline().isBefore(task.getDeadline())) {
+                                setTextFill(Color.DARKGOLDENROD);
+                            } else {
+                                setTextFill(Color.DARKGREEN);
+                            }
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
+
         showTasksList.setItems(MyCalendar.getDays().get(MyCalendar.getDayIndex(chosenDay)).getTodaysTasks());
+        showTasksList.getSelectionModel().selectFirst();
 
     }
 
@@ -244,6 +275,7 @@ public class MyCalendarController {
     }
 
     public void handleEditTaskClick(ActionEvent event) {
+        System.out.println("Editing task is a work in progress. Wait patiently");
     }
 
     public void handleCancelTaskClick(ActionEvent event) {

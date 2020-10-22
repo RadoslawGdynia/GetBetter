@@ -39,8 +39,12 @@ public class MyDay {
         if(findTask(noweZadanie)) {
             System.out.println("Zadanie " + noweZadanie.getTaskName() + " jest już zapisane w tym dniu. Operacja odrzucona");
         } else {
-            todaysTasks.add(noweZadanie);
-            System.out.println("Zadanie " + noweZadanie.getTaskName() + " zostało dodane do dnia: " + this.getDate());
+            if(noweZadanie.getDeadline().isBefore(this.getDate())) {
+                System.out.println("Deadline cannot be in the past. Please correct deadline of the added task to today or future.");
+            } else {
+                todaysTasks.add(noweZadanie);
+                System.out.println("Zadanie " + noweZadanie.getTaskName() + " zostało dodane do dnia: " + this.getDate());
+            }
         }
     }
     public boolean removeTask(Task kasowaneZadanie) {
