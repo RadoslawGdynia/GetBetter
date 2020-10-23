@@ -72,7 +72,11 @@ public class Task implements Comparable<Task> {
         return finalised;
     }
 
-    public ObservableList<Task> getSubtasks() {
+    public List<Task> getSubtasks() {
+        return subtasks;
+    }
+
+    public ObservableList<Task> getObservableSubtasks() {
         ObservableList<Task> viewSubtasks = FXCollections.observableArrayList();
         viewSubtasks.addAll(subtasks);
         return viewSubtasks;
@@ -176,7 +180,7 @@ public class Task implements Comparable<Task> {
             if (dodawane.getDeadline().isBefore(this.getDeadline()) || dodawane.getDeadline().equals(this.getDeadline())) {
                 this.subtasks.add(dodawane);
                 for (Task sub : this.subtasks){
-                    sub.setPointValue(this.pointValue/this.getSubtasks().size());
+                    sub.setPointValue(this.pointValue/this.getObservableSubtasks().size());
                 }
             } else {
                 System.out.println("Deadline podzadania nie może być później niż zadania nadrzędnego. Odrzucono.");
@@ -193,7 +197,7 @@ public class Task implements Comparable<Task> {
      */
     public void cancelSubtask(Task kasowane) {
         try {
-            int initialSubtasksNumber = this.getSubtasks().size();
+            int initialSubtasksNumber = this.getObservableSubtasks().size();
             if (this.subtasks.isEmpty()) {
                 System.out.println("Lista podzadań tego zadania jest pusta. Nie można skasować podzadania. Odrzucono.");
             } else {
@@ -204,7 +208,7 @@ public class Task implements Comparable<Task> {
                         return;
                     }
                 }
-                if (this.getSubtasks().size() == initialSubtasksNumber) {
+                if (this.getObservableSubtasks().size() == initialSubtasksNumber) {
                     System.out.println(this.getTaskName() + " nie zawiera podzadania " + kasowane.getTaskName() + ". Operacja odrzucona.");
                 }
             }

@@ -2,9 +2,9 @@ Date;2019-10-12
 Date;2019-10-13
 Date;2019-10-14
 nazwa;opis;8;2020-10-13;false;0;
-Podzadanie;                                                               nazwaPodzadania1;opisPodzadania1;2;2020-10-13;false;0;;
-Podzadanie;                                                               nazwaPodzadania2;opisPodzadania2;2;2020-10-13;false;0;;
-Podzadanie;                                                               nazwaPodzadania3;opisPodzadania3;2;2020-10-13;false;0;;
+Podzadanie;                                                                                             nazwaPodzadania1;opisPodzadania1;2;2020-10-13;false;0;;
+Podzadanie;                                                                                             nazwaPodzadania2;opisPodzadania2;2;2020-10-13;false;0;;
+Podzadanie;                                                                                             nazwaPodzadania3;opisPodzadania3;2;2020-10-13;false;0;;
 Date;2019-10-15
 Date;2019-10-16
 Date;2019-10-17
@@ -239,6 +239,7 @@ Date;2020-06-01
 Date;2020-06-02
 Date;2020-06-03
 Date;2020-06-04
+ggg;ggggg;4;2020-10-23;false;0;
 Date;2020-06-05
 Date;2020-06-06
 Date;2020-06-07
@@ -360,6 +361,7 @@ Date;2020-09-30
 Date;2020-10-01
 NewTask1;Detailed description of NewTask1, just for test;6;2020-10-31;false;0;
 Date;2020-10-02
+test33;test3456234223 details;5;2020-10-24;false;0;
 Date;2020-10-03
 Date;2020-10-04
 Date;2020-10-05
@@ -392,6 +394,8 @@ Date;2020-10-29
 Date;2020-10-30
 Date;2020-10-31
 NewTask2;NewTask2 description;1;2020-10-31;false;0;
+Task #2;Lets say, I want to implement some details;3;2020-10-31;false;0;
+sss;sssss;6;2020-10-31;false;0;
 Date;2020-11-01
 Date;2020-11-02
 Date;2020-11-03
@@ -748,3 +752,4 @@ Date;2021-10-19
 Date;2021-10-20
 Date;2021-10-21
 Date;2021-10-22
+Date;2021-10-23
