@@ -1,11 +1,9 @@
 package GetBetter;
 
 import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -27,7 +25,7 @@ public class Controller implements Initializable {
             Stage calendarStage = new Stage();
             FXMLLoader calendarLoader = new FXMLLoader();
             Pane root = calendarLoader.load(getClass().getResource("Kalendarz/MyCalendar.fxml").openStream());
-            calendarStage.setScene(new Scene(root,1200, 650));
+            calendarStage.setScene(new Scene(root,1700, 800));
             calendarStage.setTitle("Kalendarz");
             calendarStage.show();
         }

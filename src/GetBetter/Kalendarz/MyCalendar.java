@@ -18,21 +18,12 @@ import java.util.List;
 public class MyCalendar {
     private static List<MyDay> days;
     private static final String savingFile = "kalendarz.txt";
-    private static MyDay selectedDay;
 
 
     public static ObservableList<MyDay> getDays() {
         ObservableList<MyDay> viewDays = FXCollections.observableArrayList();
         viewDays.addAll(days);
         return viewDays;
-    }
-
-    public static MyDay getSelectedDay() {
-        return selectedDay;
-    }
-
-    public static void setSelectedDay(MyDay selectedDay) {
-        MyCalendar.selectedDay = selectedDay;
     }
 
     public static int getDayIndex(LocalDate date) {
@@ -109,8 +100,6 @@ public class MyCalendar {
                     date = date.plusDays(1);
                 }
             }
-
-            selectedDay =  days.get(getDayIndex(LocalDate.now()));
 
         } catch (IOException e) {
             System.out.println("Problem przy odczytywaniu pliku zadania.txt: " + e.getMessage() + "\n Stacktrace: ");

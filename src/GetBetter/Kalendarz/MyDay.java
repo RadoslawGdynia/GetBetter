@@ -31,29 +31,29 @@ public class MyDay {
         }
         return false;
     }
-    public void addTask(Task noweZadanie) {
-        if(findTask(noweZadanie)) {
-            System.out.println("Zadanie " + noweZadanie.getTaskName() + " jest już zapisane w tym dniu. Operacja odrzucona");
+    public void addTask(Task newTask) {
+        if(findTask(newTask)) {
+            System.out.println("Zadanie " + newTask.getTaskName() + " jest już zapisane w tym dniu. Operacja odrzucona");
         } else {
-            if(noweZadanie.getDeadline().isBefore(this.getDate())) {
+            if(newTask.getDeadline().isBefore(this.getDate())) {
                 System.out.println("Deadline cannot be in the past. Please correct deadline of the added task to today or future.");
             } else {
-                todaysTasks.add(noweZadanie);
-                System.out.println("Zadanie " + noweZadanie.getTaskName() + " zostało dodane do dnia: " + this.getDate());
+                todaysTasks.add(newTask);
+                System.out.println("Zadanie " + newTask.getTaskName() + " zostało dodane do dnia: " + this.getDate());
             }
         }
     }
-    public boolean removeTask(Task kasowaneZadanie) {
+    public boolean removeTask(Task taskToDelete) {
         if(todaysTasks.isEmpty()){
             System.out.println("Lista zadań na dzień " + this.getDate() + " jest pusta, skasowania zadania niemożliwe. Zarzucono.");
             return false;
         } else {
-            if (findTask(kasowaneZadanie)) {
-                todaysTasks.remove(kasowaneZadanie);
-                System.out.println("Zadanie o nazwie " + kasowaneZadanie.getTaskName() + " zostało skasowane");
+            if (findTask(taskToDelete)) {
+                todaysTasks.remove(taskToDelete);
+                System.out.println("Zadanie o nazwie " + taskToDelete.getTaskName() + " zostało skasowane");
                 return true;
             } else {
-                System.out.println("Zadania o nazwie " + kasowaneZadanie.getTaskName() + " nie ma na liście zadań. Odrzucono");
+                System.out.println("Zadania o nazwie " + taskToDelete.getTaskName() + " nie ma na liście zadań. Odrzucono");
                 return false;
             }
         }
@@ -65,12 +65,6 @@ public class MyDay {
         StringBuilder sb = new StringBuilder();
         sb.append("Date;");
         sb.append(this.getDate());
-//        sb.append(this.getDate().getYear());
-//        sb.append(";");
-//        sb.append(this.getDate().getMonth().getValue());
-//        sb.append(";");
-//        sb.append(this.getDate().getDayOfMonth());
-//        sb.append(";");
         sb.append("\n");
         if(todaysTasks.isEmpty()) {
             return sb.toString();

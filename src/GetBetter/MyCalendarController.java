@@ -2,254 +2,213 @@ package GetBetter;
 
 import GetBetter.DoZrobienia.Task;
 import GetBetter.Kalendarz.MyCalendar;
+import GetBetter.Kalendarz.MyDay;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 public class MyCalendarController {
 
-    List<Button> dayButtonList = new ArrayList<>();
-    int currentMonthNum;
-    int currentYearNum;
-    int currentDayNum;
 
-    @FXML
-    AnchorPane mainPane;
+    //GENERAL:
+    private List<TreeItem<Task>> treeItemsList = new ArrayList<>();
+    private int currentMonthNum;
+    private int currentYearNum;
+    private int currentDayNum;
+    private MyDay selectedDay = MyCalendar.getDays().get(MyCalendar.getDayIndex(LocalDate.now()));
+    private VisibleTask selectedVisibleTask;
 
-
+    //CALENDAR
     @FXML
-    Label monthName;
+    private Label monthName;
     @FXML
-    Label yearNumber;
+    private Label yearNumber;
     @FXML
-    Accordion taskAccordion;
-    @FXML
-    Label showDay;
-    @FXML
-    ListView<Task> showTasksList;
-
-    @FXML
-    Button dayButton1;
-    @FXML
-    Button dayButton2;
-    @FXML
-    Button dayButton3;
-    @FXML
-    Button dayButton4;
-    @FXML
-    Button dayButton5;
-    @FXML
-    Button dayButton6;
-    @FXML
-    Button dayButton7;
-    @FXML
-    Button dayButton8;
-    @FXML
-    Button dayButton9;
-    @FXML
-    Button dayButton10;
-    @FXML
-    Button dayButton11;
-    @FXML
-    Button dayButton12;
-    @FXML
-    Button dayButton13;
-    @FXML
-    Button dayButton14;
-    @FXML
-    Button dayButton15;
-    @FXML
-    Button dayButton16;
-    @FXML
-    Button dayButton17;
-    @FXML
-    Button dayButton18;
-    @FXML
-    Button dayButton19;
-    @FXML
-    Button dayButton20;
-    @FXML
-    Button dayButton21;
-    @FXML
-    Button dayButton22;
-    @FXML
-    Button dayButton23;
-    @FXML
-    Button dayButton24;
-    @FXML
-    Button dayButton25;
-    @FXML
-    Button dayButton26;
-    @FXML
-    Button dayButton27;
-    @FXML
-    Button dayButton28;
-    @FXML
-    Button dayButton29;
-    @FXML
-    Button dayButton30;
-    @FXML
-    Button dayButton31;
-    @FXML
-    Button dayButton32;
-    @FXML
-    Button dayButton33;
-    @FXML
-    Button dayButton34;
-    @FXML
-    Button dayButton35;
-    @FXML
-    Button dayButton36;
-    @FXML
-    Button dayButton37;
-    @FXML
-    Button dayButton38;
-    @FXML
-    Button dayButton39;
-    @FXML
-    Button dayButton40;
-    @FXML
-    Button dayButton41;
-    @FXML
-    Button dayButton42;
-
-    @FXML
-    Button addTaskButton;
-    @FXML
-    Button editTaskButton;
-    @FXML
-    Button cancelTaskButton;
+    private Pane daysTilePane;
 
 
-    
+    //DAY DETAILS
+    @FXML
+    private TabPane detailsTabPane;
+    private VisibleTaskList visibleTasks;
+
+
+
+        //Day Plan
+        @FXML
+        private Label showDay;
+        @FXML
+        private ComboBox<Task> taskSelectionCombo;
+        @FXML
+        private Pane TimePane;
+        @FXML
+        private Pane PlanningPane;
+
+        //Todays tasks
+
+        @FXML
+        private TreeTableView<Task> taskListTableView;
+        @FXML
+        private TreeTableColumn<Task, String> nameColumn;
+        @FXML
+        private TreeTableColumn<Task, String> deadlineColumn;
+        @FXML
+        private TreeTableColumn<Task, Object> progressColumn;
+
+        @FXML
+        private ListView<Task> taskList;
+
+
+        @FXML
+        private TableView<VisibleTask> TVTasksTable;
+
+
+
+
+        //GENERAL METHODS:
+
 
     public void initialize() {
-        taskAccordion.setDisable(true);
-
-        dayButtonList.add(dayButton1);
-        dayButtonList.add(dayButton2);
-        dayButtonList.add(dayButton3);
-        dayButtonList.add(dayButton4);
-        dayButtonList.add(dayButton5);
-        dayButtonList.add(dayButton6);
-        dayButtonList.add(dayButton7);
-        dayButtonList.add(dayButton8);
-        dayButtonList.add(dayButton9);
-        dayButtonList.add(dayButton10);
-        dayButtonList.add(dayButton11);
-        dayButtonList.add(dayButton12);
-        dayButtonList.add(dayButton13);
-        dayButtonList.add(dayButton14);
-        dayButtonList.add(dayButton15);
-        dayButtonList.add(dayButton16);
-        dayButtonList.add(dayButton17);
-        dayButtonList.add(dayButton18);
-        dayButtonList.add(dayButton19);
-        dayButtonList.add(dayButton20);
-        dayButtonList.add(dayButton21);
-        dayButtonList.add(dayButton22);
-        dayButtonList.add(dayButton23);
-        dayButtonList.add(dayButton24);
-        dayButtonList.add(dayButton25);
-        dayButtonList.add(dayButton26);
-        dayButtonList.add(dayButton27);
-        dayButtonList.add(dayButton28);
-        dayButtonList.add(dayButton29);
-        dayButtonList.add(dayButton30);
-        dayButtonList.add(dayButton31);
-        dayButtonList.add(dayButton32);
-        dayButtonList.add(dayButton33);
-        dayButtonList.add(dayButton34);
-        dayButtonList.add(dayButton35);
-        dayButtonList.add(dayButton36);
-        dayButtonList.add(dayButton37);
-        dayButtonList.add(dayButton38);
-        dayButtonList.add(dayButton39);
-        dayButtonList.add(dayButton40);
-        dayButtonList.add(dayButton41);
-        dayButtonList.add(dayButton42);
+        detailsTabPane.setDisable(true);
+        currentMonthNum = selectedDay.getDate().getMonthValue();
+        currentYearNum = selectedDay.getDate().getYear();
+        currentDayNum = selectedDay.getDate().getDayOfMonth();
+        configureCalendarPane();
+    }
 
 
-        currentMonthNum = MyCalendar.getSelectedDay().getDate().getMonthValue();
-        currentYearNum = MyCalendar.getSelectedDay().getDate().getYear();
-        currentDayNum = MyCalendar.getSelectedDay().getDate().getDayOfMonth();
+    //CALENDAR AREA METHODS:
+    //=====================
+
+    private void configureCalendarPane() {
 
         monthName.setText(LocalDate.of(currentYearNum, currentMonthNum, currentDayNum).getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH));
         yearNumber.setText(String.valueOf(currentYearNum));
 
-        int firstDayOfMonth = LocalDate.of(currentYearNum,currentMonthNum,currentDayNum-(currentDayNum-1)).getDayOfWeek().getValue();
-        int dayNumeration = 1;
+        int firstDayOfMonth = LocalDate.of(currentYearNum, currentMonthNum, currentDayNum - (currentDayNum - 1)).getDayOfWeek().getValue();
         int numberOfDaysInCurrentMonth = LocalDate.of(currentYearNum, currentMonthNum, currentDayNum).getMonth().maxLength();
 
-        for(int i = 1; i<=dayButtonList.size(); i++) {
-            if((i>=firstDayOfMonth) && (i<(numberOfDaysInCurrentMonth+firstDayOfMonth))) {
-                dayButtonList.get(i-1).setText(String.valueOf(dayNumeration));
-                dayNumeration++;
-            }else {
-                dayButtonList.get(i-1).setText("");
-                dayButtonList.get(i-1).setDisable(true);
+        int NUM_OF_TILES = 42;
+        int size = 90;
+
+        for (int i = 1; i <= NUM_OF_TILES; i++) {
+
+            String idString = "CalendarTile" + i;
+            DayField dayField;
+
+            if ((i >= firstDayOfMonth) && (i < (numberOfDaysInCurrentMonth + firstDayOfMonth))) {
+                String display = "" + (i - (firstDayOfMonth - 1));
+                dayField = new DayField(daysTilePane, idString, display, size, size);
+
+
+            } else {
+
+                dayField = new DayField(daysTilePane, idString, "", size, size);
+                dayField.setDisable(true);
+                dayField.setVisible(false);
 
 
             }
         }
     }
+    public void handleMonthBack() {
+        daysTilePane.getChildren().clear();
+        if (currentMonthNum == 1) {
+            currentMonthNum = 12;
+            currentYearNum--;
+        } else {
+            currentMonthNum--;
+        }
+        detailsTabPane.setDisable(true);
+        configureCalendarPane();
+        System.out.println("Currently chosen day is: " + LocalDate.of(currentYearNum, currentMonthNum, currentDayNum).getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH));
+    }
+
+    public void handleMonthForward() {
+        daysTilePane.getChildren().clear();
+        if (currentMonthNum == 12) {
+            currentMonthNum = 1;
+            currentYearNum++;
+        } else {
+            currentMonthNum++;
+        }
+        detailsTabPane.setDisable(true);
+        configureCalendarPane();
+        System.out.println("Currently chosen day is: " + LocalDate.of(currentYearNum, currentMonthNum, currentDayNum).getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH));
+    }
+
+    //DAY DETAILS METHODS:
+    //===================
 
 
-    public void handleDayClick(ActionEvent e) {
-        Button chosenButton = (Button) e.getSource();
-        LocalDate chosenDay = LocalDate.of(currentYearNum,currentMonthNum,Integer.parseInt(chosenButton.getText()));
-        MyCalendar.setSelectedDay(MyCalendar.getDays().get(MyCalendar.getDayIndex(chosenDay)));
-        showDay.setText("View for of the day: " + chosenDay.toString());
-        taskAccordion.setDisable(false);
+    // A. DAY PLAN METHODS:
 
-        showTasksList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        showTasksList.setCellFactory(new Callback<>() {
-            @Override
-            public ListCell<Task> call(ListView<Task> taskListView) {
-                return new ListCell<>() {
-                    @Override
-                    protected void updateItem(Task task, boolean b) {
-                        super.updateItem(task, b);
-                        if (b) {
-                            setText(null);
-                        } else {
-                            setText(task.getTaskName());
-                            if (task.getDeadline().isEqual(LocalDate.now())) {
-                                setTextFill(Color.DARKRED);
-                            } else if (task.getDeadline().isAfter(task.getDeadline().minusDays(3)) && task.getDeadline().isBefore(task.getDeadline())) {
-                                setTextFill(Color.DARKGOLDENROD);
-                            } else {
-                                setTextFill(Color.DARKGREEN);
-                            }
-                        }
-                    }
-                };
+
+
+    // B. TODAYS TASK METHODS:
+
+    private void configureTasksTable() {
+        TVTasksTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        visibleTasks = new VisibleTaskList(selectedDay);
+        TVTasksTable.setItems(visibleTasks.getList());
+    }
+
+
+    public void configureSubtasksTable(ActionEvent e) {
+
+        for (Task task : selectedDay.getTodaysTasks()) {
+            TreeItem<Task> itemToAdd = new TreeItem<>(task);
+            treeItemsList.add(itemToAdd);
+            for (Task subtask : task.getSubtasks()) {
+                TreeItem<Task> subitemToAdd = new TreeItem<>(subtask);
+                itemToAdd.getChildren().add(subitemToAdd);
             }
+            taskListTableView.setRoot(itemToAdd);
+        }
+
+        nameColumn.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Task, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Task, String> taskStringCellDataFeatures) {
+                return new SimpleStringProperty(taskStringCellDataFeatures.getValue().getValue().getTaskName());
+            }
+
+
         });
 
-        showTasksList.setItems(MyCalendar.getDays().get(MyCalendar.getDayIndex(chosenDay)).getTodaysTasks());
-        showTasksList.getSelectionModel().selectFirst();
+        deadlineColumn.setCellValueFactory(taskStringCellDataFeatures -> {
+            if (taskStringCellDataFeatures == null) {
+                return null;
+            } else {
+                return new SimpleStringProperty(taskStringCellDataFeatures.getValue().getValue().getDeadline().toString());
+            }
+        });
 
     }
 
     public void handleAddTaskClick() {
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Addition of task to the day: " + MyCalendar.getSelectedDay());
-        FXMLLoader fxmlLoader= new FXMLLoader();
+        dialog.setTitle("Addition of task to the day: " + selectedDay);
+        FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("Kalendarz/AddTaskDialog.fxml"));
+
 
         try {
             dialog.getDialogPane().setContent(fxmlLoader.load());
@@ -262,12 +221,11 @@ public class MyCalendarController {
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
 
         Optional<ButtonType> result = dialog.showAndWait();
-        if(result.isPresent() && result.get()==ButtonType.OK) {
+        if (result.isPresent() && result.get() == ButtonType.OK) {
             AddTaskDialog newTaskToAdd = fxmlLoader.getController();
             Task toAdd = newTaskToAdd.createTask();
-            MyCalendar.getDays().get(MyCalendar.getDayIndex(MyCalendar.getSelectedDay().getDate())).addTask(toAdd);
+            visibleTasks.addVisibleTask(toAdd);
         }
-
 
 
     }
@@ -276,21 +234,156 @@ public class MyCalendarController {
         System.out.println("Editing task is a work in progress. Wait patiently");
     }
 
-    public void handleCancelTaskClick(ActionEvent event) {
-        EventHandler<ActionEvent> delete = event1 -> {
-            Task taskToCancel = showTasksList.getSelectionModel().getSelectedItem();
-            deleteTask(taskToCancel);
-        };
+    public void handleDeleteTaskClick(ActionEvent event) {
+        selectedVisibleTask = TVTasksTable.getSelectionModel().getSelectedItem();
+        deleteTask(selectedVisibleTask);
     }
-    public void deleteTask(Task t) {
-        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-            a.setTitle("Task deletion");
-            a.setHeaderText("You intend to delete task: " + t.getTaskName());
-            a.setContentText("Are you sure you want to proceed? This operation is irreversible and you put this task in for a good reason");
-            Optional<ButtonType> result = a.showAndWait();
 
-            if(result.isPresent() && result.get()==ButtonType.OK) {
-                MyCalendar.getDays().get(MyCalendar.getDayIndex(MyCalendar.getSelectedDay().getDate())).getTodaysTasks().remove(t);
+    public void deleteTask(VisibleTask t) {
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+        a.setTitle("Task deletion");
+        a.setHeaderText("You intend to delete task: " + t.getTaskName());
+        a.setContentText("Are you sure you want to proceed? This operation is irreversible and you put this task in for a good reason");
+        Optional<ButtonType> result = a.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            visibleTasks.removeVisibleTask(t);
+        }
+    }
+
+
+
+    class DayField extends StackPane {
+        private final Pane root;
+        private final String ID;
+        private String display;
+
+        public DayField(Pane tpane, String id, String display, int xPixels, int yPixels) {
+
+            this.ID = id;
+            this.root = tpane;
+            this.display = display;
+
+
+            tpane.getChildren().add(this);
+            Rectangle border = new Rectangle(xPixels, yPixels);
+            border.setFill(Color.DARKGREEN);
+            border.setStroke(Color.BLACK);
+            Text text = new Text(display);
+            text.setFont(Font.font("Calibri", 30));
+            text.setTextAlignment(TextAlignment.CENTER);
+            getChildren().addAll(border, text);
+
+            this.setOnMouseClicked(event -> handleDayClick());
+
+        }
+
+        private void handleDayClick() {
+            selectedDay = MyCalendar.getDays().get(MyCalendar.
+                    getDayIndex(LocalDate.of(
+                            currentYearNum,
+                            currentMonthNum,
+                            Integer.parseInt(this.display))));
+            showDay.setText("Plans for: " + this.display);
+            detailsTabPane.setDisable(false);
+          configureTasksTable();
+        }
+    }
+    public class VisibleTask {
+        private ObservableList<VisibleTask> subtasks = FXCollections.observableArrayList();
+        private SimpleStringProperty taskName = new SimpleStringProperty("");
+        private SimpleStringProperty taskDetails = new SimpleStringProperty("");
+        private SimpleStringProperty taskDeadline = new SimpleStringProperty("");
+        private SimpleStringProperty taskSubtasksNumber = new SimpleStringProperty("");
+
+        public VisibleTask(String name, String details, String date, String subtasksNumber) {
+            taskName.set(name);
+            taskDetails.set(details);
+            taskDeadline.set(date);
+            taskSubtasksNumber.set(subtasksNumber);
+
+        }
+
+        public String getTaskName() {
+            return taskName.get();
+        }
+
+        public SimpleStringProperty taskNameProperty() {
+            return taskName;
+        }
+
+        public String getTaskDeadline() {
+            return taskDeadline.get();
+        }
+
+        public SimpleStringProperty taskDeadlineProperty() {
+            return taskDeadline;
+        }
+
+        public ObservableList<VisibleTask> getSubtasks() {
+            return subtasks;
+        }
+
+        public String getTaskDetails() {
+            return taskDetails.get();
+        }
+
+        public SimpleStringProperty taskDetailsProperty() {
+            return taskDetails;
+        }
+
+        public String getTaskSubtasksNumber() {
+            return taskSubtasksNumber.get();
+        }
+
+        public SimpleStringProperty taskSubtasksNumberProperty() {
+            return taskSubtasksNumber;
+        }
+    }
+    public class VisibleTaskList {
+        private MyDay rootDay;
+        private ObservableList<VisibleTask> list = FXCollections.observableArrayList();
+
+        public VisibleTaskList(MyDay currentDay) {
+            this.rootDay = currentDay;
+            for(Task task : currentDay.getTodaysTasks()){
+                list.add(new VisibleTask(task.getTaskName(), task.getDetails(), task.getDeadline().toString(), task.getSubtasks().size() + ""));
+            }
+        }
+        public void addVisibleTask(Task task)  {
+            rootDay.addTask(task);
+            VisibleTask toAdd = new VisibleTask(
+                    rootDay.getTodaysTasks().get(rootDay.getTodaysTasks().size()-1).getTaskName(),
+                    rootDay.getTodaysTasks().get(rootDay.getTodaysTasks().size()-1).getDetails(),
+                    rootDay.getTodaysTasks().get(rootDay.getTodaysTasks().size()-1).getDeadline().toString(),
+                    rootDay.getTodaysTasks().get(rootDay.getTodaysTasks().size()-1).getSubtasks().size()+"");
+            list.add(toAdd);
+        }
+        public void removeVisibleTask(VisibleTask vTask) {
+            int i;
+            try {
+                for (VisibleTask T : list) {
+                    if (T.getTaskName().equals(vTask.getTaskName()) && T.getTaskDeadline().equals(vTask.getTaskDeadline())) {
+                        i = list.indexOf(T);
+                        System.out.println("Visible task " + vTask.getTaskName() + " was removed");
+                        list.remove(vTask);
+                        rootDay.removeTask(rootDay.getTodaysTasks().get(i));
+                    }
+                }
+            } catch (ConcurrentModificationException e) {
+                System.out.println("Two lists tangled together get modified separately");
+            }
+
+        }
+
+        public ObservableList<VisibleTask> getList() {
+            return list;
+        }
+
+        public MyDay getRootDay() {
+            return rootDay;
         }
     }
 }
+
+
