@@ -155,7 +155,7 @@ public class Task implements Comparable<Task> {
         StringBuilder textSubtasks = new StringBuilder();
         if (subtasks.size() > 0) {
             for (Task sub : subtasks) {
-                textSubtasks.append("\nPodzadanie; ");
+                textSubtasks.append("\nPodzadanie;");
                 textSubtasks.append(sub.toString());
                 textSubtasks.append(";");
             }
