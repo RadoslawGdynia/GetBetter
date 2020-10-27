@@ -1,10 +1,11 @@
 package GetBetter.DoZrobienia;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Objects;
@@ -15,49 +16,51 @@ import java.util.Objects;
  */
 public class Task implements Comparable<Task> {
 
-    private final String taskName;
-    private String details;
-    // private Status status;  //status zadania będzie modyfikatorem wartości punktowej;
-    private int pointValue;
+    //Visible properties
+    private final SimpleStringProperty taskName = new SimpleStringProperty("");
+    private SimpleStringProperty details = new SimpleStringProperty("");
     private LocalDate deadline;
-    private boolean finalised; //weryfikuje czy już zrobione czy nie - checkbox w javaFX
-    private final List<Task> subtasks;
-    private int deadlineChangeCounter;
+    private SimpleBooleanProperty finalised = new SimpleBooleanProperty();
+    private ObservableList<Task> subtasks;
 
+    //Hidden properties
+    private int pointValue;
+    private int deadlineChangeCounter;
 
     /**
      * Creates new Task Object in the program. Only some fields are possible for user to specify, others are internally specified
      */
     public Task(String taskName, String details, LocalDate deadline) {
-        this.taskName = taskName;
-        this.details = details;
+        this.taskName.set(taskName);
+        this.details.set(details);
         this.deadline = deadline;
-        //this.status = status;
+        this.finalised.set(false);
+        this.subtasks = FXCollections.observableArrayList();
+
         this.pointValue = 1 + (int) (Math.random() * 10); //w wersji ostatecznej wartość 10 zostanie zmieniona na wartość przypisaną do statusu.
-        this.subtasks = new ArrayList<>();
-        this.finalised = false;
         this.deadlineChangeCounter = 0;
     }
 
     /**
      * Constructor with all fields being specified is necessary for loading the data from the file and recreating previous list.
      */
-    public Task(String taskName, String details, int pointValue, LocalDate deadline, boolean finalised, List<Task> subtasks, int deadlineChangeCounter) {
-        this.taskName = taskName;
-        this.details = details;
-        this.pointValue = pointValue;
+    public Task(String taskName, String details, int pointValue, LocalDate deadline, boolean finalised, List<Task> addedSubtasks, int deadlineChangeCounter) {
+        this.taskName.set(taskName);
+        this.details.set(details);
         this.deadline = deadline;
-        this.finalised = finalised;
-        this.subtasks = subtasks;
+        this.finalised.set(finalised);
+        this.subtasks = FXCollections.observableArrayList();
+        subtasks.addAll(addedSubtasks);
+        this.pointValue = pointValue;
         this.deadlineChangeCounter = deadlineChangeCounter;
     }
 
     public String getTaskName() {
-        return taskName;
+        return taskName.get();
     }
 
     public String getDetails() {
-        return details;
+        return details.get();
     }
 
     public int getPointValue() {
@@ -69,13 +72,11 @@ public class Task implements Comparable<Task> {
     }
 
     public boolean getFinalised() {
-        return finalised;
+        return finalised.getValue();
     }
 
     public ObservableList<Task> getSubtasks() {
-        ObservableList<Task> viewSubtasks = FXCollections.observableArrayList();
-        viewSubtasks.addAll(subtasks);
-        return viewSubtasks;
+        return subtasks;
     }
 
     public int getDeadlineChangeCounter() {
@@ -90,12 +91,12 @@ public class Task implements Comparable<Task> {
                    return;
                }
             }
-            this.finalised = true;
+            this.finalised.setValue(true);
         }
     }
 
     private void setDetails(String details) {
-        this.details = details;
+        this.details.setValue(details);
     }
 
     private void setDeadline(LocalDate deadline) {

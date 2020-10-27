@@ -5,17 +5,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class MyDay {
     private final LocalDate date;
-    private final List<Task> todaysTasks;
+    private final ObservableList<Task> todaysTasks;
 
     public MyDay(LocalDate date) {
         this.date = date;
-        this.todaysTasks = new ArrayList<>();
+        this.todaysTasks = FXCollections.observableArrayList();
     }
 
     public LocalDate getDate() {
@@ -23,9 +21,7 @@ public class MyDay {
     }
 
     public ObservableList<Task> getTodaysTasks() {
-        ObservableList<Task> viewTodaysTasks = FXCollections.observableArrayList();
-        viewTodaysTasks.addAll(todaysTasks);
-        return viewTodaysTasks;
+        return todaysTasks;
     }
     private boolean findTask(Task szukane) {
         for(Task task : todaysTasks) {
