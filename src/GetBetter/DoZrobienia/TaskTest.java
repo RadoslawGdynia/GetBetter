@@ -29,69 +29,69 @@ class TaskTest {
 
     @org.junit.jupiter.api.Test
     void addSubtask() {
-        int initialSize = testTask.getObservableSubtasks().size();
+        int initialSize = testTask.getSubtasks().size();
         Task subtaskTest = new Task("Added", "Was it added?", LocalDate.now());
-        System.out.println("Size of list subtasks BEFORE addition: " + testTask.getObservableSubtasks().size());
+        System.out.println("Size of list subtasks BEFORE addition: " + testTask.getSubtasks().size());
         testTask.addSubtask(subtaskTest);
-        System.out.println("Size of list subtasks AFTER addition: " + testTask.getObservableSubtasks().size());
-        assertEquals(initialSize + 1, testTask.getObservableSubtasks().size());
+        System.out.println("Size of list subtasks AFTER addition: " + testTask.getSubtasks().size());
+        assertEquals(initialSize + 1, testTask.getSubtasks().size());
 
 
         System.out.println("\n===== ADDING SUBTASK EQUAL TO ONE OF SUBTASKS (should fail) ====");
         Task duplicate = new Task("Added", "Was it added?", LocalDate.now());
         testTask.addSubtask(duplicate);
-        assertEquals(initialSize + 1, testTask.getObservableSubtasks().size());
+        assertEquals(initialSize + 1, testTask.getSubtasks().size());
     }
 
     @org.junit.jupiter.api.Test
     void addExistingSubtask() {
-        int initialSize = testTask.getObservableSubtasks().size();
+        int initialSize = testTask.getSubtasks().size();
         Task subtaskTest = new Task("Added", "Was it added?", LocalDate.now());
         testTask.addSubtask(subtaskTest);
         testTask.addSubtask(subtaskTest);
-        assertEquals(initialSize + 1, testTask.getObservableSubtasks().size());
+        assertEquals(initialSize + 1, testTask.getSubtasks().size());
     }
 
     @org.junit.jupiter.api.Test
     void addDuplicateSubtask() {
-        int initialSize = testTask.getObservableSubtasks().size();
+        int initialSize = testTask.getSubtasks().size();
         Task subtaskTest = new Task("Added", "Was it added?", LocalDate.now());
         testTask.addSubtask(subtaskTest);
         Task duplicate = new Task("Added", "Was it added?", LocalDate.now());
         testTask.addSubtask(duplicate);
-        assertEquals(initialSize + 1, testTask.getObservableSubtasks().size());
+        assertEquals(initialSize + 1, testTask.getSubtasks().size());
     }
 
     @org.junit.jupiter.api.Test
     void addSubtask_overDate() {
 
-        int initialSize = testTask.getObservableSubtasks().size();
+        int initialSize = testTask.getSubtasks().size();
         Task overdue = new Task("Sorry", "How could have I missed it?", LocalDate.now().plusDays(3));
         testTask.addSubtask(overdue);
-        assertEquals(initialSize, testTask.getObservableSubtasks().size());
+        assertEquals(initialSize, testTask.getSubtasks().size());
     }
 
     @org.junit.jupiter.api.Test
     void cancelSubtask() {
-        int initialSize = testTask.getObservableSubtasks().size();
-        System.out.println("Size of list subtasks BEFORE cancelation: " + testTask.getObservableSubtasks().size());
-        Task subtaskToCancel = testTask.getObservableSubtasks().get(testTask.getObservableSubtasks().size() - 1);
+        int initialSize = testTask.getSubtasks().size();
+        System.out.println("Size of list subtasks BEFORE cancelation: " + testTask.getSubtasks().size());
+        Task subtaskToCancel = testTask.getSubtasks().get(testTask.getSubtasks().size() - 1);
         testTask.cancelSubtask(subtaskToCancel);
-        System.out.println("Size of list subtasks AFTER cancelation: " + testTask.getObservableSubtasks().size());
-        assertEquals(initialSize - 1, testTask.getObservableSubtasks().size());
+        System.out.println("Size of list subtasks AFTER cancelation: " + testTask.getSubtasks().size());
+        assertEquals(initialSize - 1, testTask.getSubtasks().size());
 
 
     }
 
     @org.junit.jupiter.api.Test
     void cancelSubtask_NonExistent() {
-        int initialSize = testTask.getObservableSubtasks().size();
+        int initialSize = testTask.getSubtasks().size();
 
         Task subtaskTest = new Task("NotExistsInList", "Was it removed?", LocalDate.now());
-        System.out.println("Size of list subtasks BEFORE cancelation: " + testTask.getObservableSubtasks().size());
+        System.out.println("Size of list subtasks BEFORE cancelation: " + testTask.getSubtasks().size());
         testTask.cancelSubtask(subtaskTest);
-        System.out.println("Size of list subtasks AFTER cancelation: " + testTask.getObservableSubtasks().size());
-        assertEquals(initialSize, testTask.getObservableSubtasks().size());
+        System.out.println("Size of list subtasks AFTER cancelation: " + testTask.getSubtasks().size());
+        assertEquals(initialSize, testTask.getSubtasks().size());
     }
 
 

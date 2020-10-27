@@ -1,12 +1,9 @@
-package GetBetter;
+package GetBetter.Kalendarz;
 
+import GetBetter.AddTaskDialog;
 import GetBetter.DoZrobienia.Task;
-import GetBetter.Kalendarz.MyCalendar;
-import GetBetter.Kalendarz.MyDay;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +20,10 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 public class MyCalendarController {
 
@@ -34,7 +34,6 @@ public class MyCalendarController {
     private int currentYearNum;
     private int currentDayNum;
     private MyDay selectedDay = MyCalendar.getDays().get(MyCalendar.getDayIndex(LocalDate.now()));
-    private VisibleTask selectedVisibleTask;
 
     //CALENDAR
     @FXML
@@ -48,7 +47,6 @@ public class MyCalendarController {
     //DAY DETAILS
     @FXML
     private TabPane detailsTabPane;
-    private VisibleTaskList visibleTasks;
 
 
 
@@ -78,7 +76,9 @@ public class MyCalendarController {
 
 
         @FXML
-        private TableView<VisibleTask> TVTasksTable;
+        private TableView<Task> TVTasksTable;
+
+        //private TableView<VisibleTask> TVTasksTable;
 
 
 
@@ -167,12 +167,11 @@ public class MyCalendarController {
 
     private void configureTasksTable() {
         TVTasksTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        visibleTasks = new VisibleTaskList(selectedDay);
-        TVTasksTable.setItems(visibleTasks.getList());
+        TVTasksTable.setItems(selectedDay.getTodaysTasks());
     }
 
 
-    public void configureSubtasksTable(ActionEvent e) {
+    public void configureSubtasksTable() {
 
         for (Task task : selectedDay.getTodaysTasks()) {
             TreeItem<Task> itemToAdd = new TreeItem<>(task);
@@ -207,7 +206,7 @@ public class MyCalendarController {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Addition of task to the day: " + selectedDay);
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("Kalendarz/AddTaskDialog.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("AddTaskDialog.fxml"));
 
 
         try {
@@ -224,7 +223,7 @@ public class MyCalendarController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             AddTaskDialog newTaskToAdd = fxmlLoader.getController();
             Task toAdd = newTaskToAdd.createTask();
-            visibleTasks.addVisibleTask(toAdd);
+            selectedDay.addTask(toAdd);
         }
 
 
@@ -235,11 +234,12 @@ public class MyCalendarController {
     }
 
     public void handleDeleteTaskClick(ActionEvent event) {
-        selectedVisibleTask = TVTasksTable.getSelectionModel().getSelectedItem();
-        deleteTask(selectedVisibleTask);
+       // selectedVisibleTask = TVTasksTable.getSelectionModel().getSelectedItem();
+        Task task = TVTasksTable.getSelectionModel().getSelectedItem();
+        deleteTask(task);
     }
 
-    public void deleteTask(VisibleTask t) {
+    public void deleteTask(Task t) {
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
         a.setTitle("Task deletion");
         a.setHeaderText("You intend to delete task: " + t.getTaskName());
@@ -247,7 +247,8 @@ public class MyCalendarController {
         Optional<ButtonType> result = a.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            visibleTasks.removeVisibleTask(t);
+            selectedDay.removeTask(t);
+            //visibleTasks.removeVisibleTask(t);
         }
     }
 
@@ -287,103 +288,10 @@ public class MyCalendarController {
             showDay.setText("Plans for: " + this.display);
             detailsTabPane.setDisable(false);
           configureTasksTable();
+          configureSubtasksTable();
         }
     }
-    public class VisibleTask {
-        private ObservableList<VisibleTask> subtasks = FXCollections.observableArrayList();
-        private SimpleStringProperty taskName = new SimpleStringProperty("");
-        private SimpleStringProperty taskDetails = new SimpleStringProperty("");
-        private SimpleStringProperty taskDeadline = new SimpleStringProperty("");
-        private SimpleStringProperty taskSubtasksNumber = new SimpleStringProperty("");
 
-        public VisibleTask(String name, String details, String date, String subtasksNumber) {
-            taskName.set(name);
-            taskDetails.set(details);
-            taskDeadline.set(date);
-            taskSubtasksNumber.set(subtasksNumber);
-
-        }
-
-        public String getTaskName() {
-            return taskName.get();
-        }
-
-        public SimpleStringProperty taskNameProperty() {
-            return taskName;
-        }
-
-        public String getTaskDeadline() {
-            return taskDeadline.get();
-        }
-
-        public SimpleStringProperty taskDeadlineProperty() {
-            return taskDeadline;
-        }
-
-        public ObservableList<VisibleTask> getSubtasks() {
-            return subtasks;
-        }
-
-        public String getTaskDetails() {
-            return taskDetails.get();
-        }
-
-        public SimpleStringProperty taskDetailsProperty() {
-            return taskDetails;
-        }
-
-        public String getTaskSubtasksNumber() {
-            return taskSubtasksNumber.get();
-        }
-
-        public SimpleStringProperty taskSubtasksNumberProperty() {
-            return taskSubtasksNumber;
-        }
-    }
-    public class VisibleTaskList {
-        private MyDay rootDay;
-        private ObservableList<VisibleTask> list = FXCollections.observableArrayList();
-
-        public VisibleTaskList(MyDay currentDay) {
-            this.rootDay = currentDay;
-            for(Task task : currentDay.getTodaysTasks()){
-                list.add(new VisibleTask(task.getTaskName(), task.getDetails(), task.getDeadline().toString(), task.getSubtasks().size() + ""));
-            }
-        }
-        public void addVisibleTask(Task task)  {
-            rootDay.addTask(task);
-            VisibleTask toAdd = new VisibleTask(
-                    rootDay.getTodaysTasks().get(rootDay.getTodaysTasks().size()-1).getTaskName(),
-                    rootDay.getTodaysTasks().get(rootDay.getTodaysTasks().size()-1).getDetails(),
-                    rootDay.getTodaysTasks().get(rootDay.getTodaysTasks().size()-1).getDeadline().toString(),
-                    rootDay.getTodaysTasks().get(rootDay.getTodaysTasks().size()-1).getSubtasks().size()+"");
-            list.add(toAdd);
-        }
-        public void removeVisibleTask(VisibleTask vTask) {
-            int i;
-            try {
-                for (VisibleTask T : list) {
-                    if (T.getTaskName().equals(vTask.getTaskName()) && T.getTaskDeadline().equals(vTask.getTaskDeadline())) {
-                        i = list.indexOf(T);
-                        System.out.println("Visible task " + vTask.getTaskName() + " was removed");
-                        list.remove(vTask);
-                        rootDay.removeTask(rootDay.getTodaysTasks().get(i));
-                    }
-                }
-            } catch (ConcurrentModificationException e) {
-                System.out.println("Two lists tangled together get modified separately");
-            }
-
-        }
-
-        public ObservableList<VisibleTask> getList() {
-            return list;
-        }
-
-        public MyDay getRootDay() {
-            return rootDay;
-        }
-    }
 }
 
 

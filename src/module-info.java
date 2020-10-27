@@ -4,4 +4,6 @@ module GetBetter {
     requires org.junit.jupiter.api;
 
     opens GetBetter;
+    opens GetBetter.Kalendarz;
+    opens GetBetter.DoZrobienia;
 }

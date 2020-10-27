@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="mainPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1700.0" style="-fx-background-color: #2A9246;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GetBetter.MyCalendarController">
+<AnchorPane fx:id="mainPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1700.0" style="-fx-background-color: #2A9246;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GetBetter.Kalendarz.MyCalendarController">
    <TabPane fx:id="detailsTabPane" layoutX="601.0" layoutY="-2.0" prefHeight="800.0" prefWidth="755.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
      <tabs>
          <Tab text="Day Plan">
@@ -60,13 +60,13 @@
                            </TableColumn>
                          <TableColumn fx:id="TVTaskDeadline" prefWidth="85.0" text="Deadline">
                              <cellValueFactory>
-                                 <PropertyValueFactory property="taskDeadline" />
+                                 <PropertyValueFactory property="deadline" />
                              </cellValueFactory>
                          </TableColumn>
                            <TableColumn fx:id="TVNumberOfSubtasks" prefWidth="137.0" text="Number of Subtasks">
-                               <cellValueFactory>
-                                   <PropertyValueFactory property="taskSubtasksNumber" />
-                               </cellValueFactory>
+<!--                               <cellValueFactory>-->
+<!--                                   <PropertyValueFactory property="taskSubtasksNumber" />-->
+<!--                               </cellValueFactory>-->
                            </TableColumn>
                            <TableColumn prefWidth="148.0" text="Status">
                               <!-- <cellValueFactory>

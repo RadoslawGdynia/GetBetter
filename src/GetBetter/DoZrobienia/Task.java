@@ -136,15 +136,15 @@ public class Task implements Comparable<Task> {
 
         StringBuilder textTask = new StringBuilder();
 
-        textTask.append(taskName);
+        textTask.append(taskName.getValue());
         textTask.append(";");
-        textTask.append(details);
+        textTask.append(details.getValue());
         textTask.append(";");
         textTask.append(pointValue);
         textTask.append(";");
         textTask.append(deadline);
         textTask.append(";");
-        textTask.append(finalised);
+        textTask.append(finalised.getValue());
         textTask.append(";");
         textTask.append(deadlineChangeCounter);
         textTask.append(";");
@@ -152,7 +152,7 @@ public class Task implements Comparable<Task> {
         StringBuilder textSubtasks = new StringBuilder();
         if (subtasks.size() > 0) {
             for (Task sub : subtasks) {
-                textSubtasks.append("\nPodzadanie; ");
+                textSubtasks.append("\nPodzadanie;");
                 textSubtasks.append(sub.toString());
                 textSubtasks.append(";");
             }
