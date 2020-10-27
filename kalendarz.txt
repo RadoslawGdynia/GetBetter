@@ -385,6 +385,7 @@ Date;2020-10-22
 NewTask3;Details of NewTask3;1;2020-10-25;false;0;
 Red;It should be red;8;2020-10-22;false;0;
 Date;2020-10-23
+nowy;owy owy owy;4;2020-10-29;false;0;
 Date;2020-10-24
 Date;2020-10-25
 Date;2020-10-26
@@ -393,8 +394,9 @@ Date;2020-10-28
 Date;2020-10-29
 Date;2020-10-30
 Date;2020-10-31
-NewTask2;NewTask2 description;1;2020-10-31;false;0;
-sss;sssss;6;2020-10-31;false;0;
+rrr;rrrr;4;2020-10-31;false;0;
+asfa;aff;2;2020-10-31;false;0;
+qqqqq;qqqqq;5;2020-10-31;false;0;
 Date;2020-11-01
 Date;2020-11-02
 Date;2020-11-03

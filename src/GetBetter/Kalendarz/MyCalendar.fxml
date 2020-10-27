@@ -64,9 +64,9 @@
                              </cellValueFactory>
                          </TableColumn>
                            <TableColumn fx:id="TVNumberOfSubtasks" prefWidth="137.0" text="Number of Subtasks">
-<!--                               <cellValueFactory>-->
-<!--                                   <PropertyValueFactory property="taskSubtasksNumber"/>-->
-<!--                               </cellValueFactory>-->
+                               <cellValueFactory>
+                                   <PropertyValueFactory property="taskSubtasksNumber" />
+                               </cellValueFactory>
                            </TableColumn>
                            <TableColumn prefWidth="148.0" text="Status">
                               <!-- <cellValueFactory>
@@ -75,7 +75,6 @@
                            </TableColumn>
                        </columns>
                      </TableView>
-                     <ListView fx:id="taskList" layoutX="546.0" layoutY="258.0" prefHeight="204.0" prefWidth="191.0" />
                   </children>
                </AnchorPane>
          </content>
