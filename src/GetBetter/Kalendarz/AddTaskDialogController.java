@@ -1,4 +1,4 @@
-package GetBetter;
+package GetBetter.Kalendarz;
 
 import GetBetter.DoZrobienia.Task;
 import javafx.fxml.FXML;
@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
 
-public class AddTaskDialog {
+public class AddTaskDialogController {
     @FXML
     TextField taskName;
     @FXML

@@ -369,9 +369,18 @@ Date;2020-10-28
 Date;2020-10-29
 Date;2020-10-30
 Date;2020-10-31
-CheckThisOut;Whoa, it worked;8;2020-11-01;false;0;
-SecondTask;kjdauhfia;7;2020-10-31;false;0;
-thirdTask;fhausgfuasdhfasgf;1;2020-11-01;false;0;
+ssssss;ssss;10;2020-11-04;false;0;
+ttttttttt;t;7;2020-11-02;false;0;
+Podzadanie;a co;momomo;2;2020-11-02;false;0;;
+Podzadanie;silsjfisei;sss;2;2020-11-01;false;0;;
+Podzadanie;ggggggggggg;g;2;2020-10-31;false;0;;
+mamoooooooooooooooo;działa czy nie działa?;6;2020-11-01;false;0;
+Podzadanie;mamo2;cotocoto;1;2020-10-31;false;0;;
+Podzadanie;jjjjjjj;jjjjj;1;2020-10-31;false;0;;
+Podzadanie;o ja cieee;sss;1;2020-10-31;false;0;;
+Podzadanie;gygguu;jjj;1;2020-10-31;false;0;;
+heloł;ssss;9;2020-11-07;false;0;
+Podzadanie;hguvves;kkk;9;2020-10-31;false;0;;
 Date;2020-11-01
 Date;2020-11-02
 Date;2020-11-03
@@ -733,3 +742,6 @@ Date;2021-10-24
 Date;2021-10-25
 Date;2021-10-26
 Date;2021-10-27
+Date;2021-10-28
+Date;2021-10-29
+Date;2021-10-30

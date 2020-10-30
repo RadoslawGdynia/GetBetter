@@ -24,6 +24,8 @@ public class Task implements Comparable<Task> {
     private ObservableList<Task> subtasks;
 
     //Hidden properties
+    private SimpleStringProperty subtaskQuantity = new SimpleStringProperty();
+    private int sq;
     private int pointValue;
     private int deadlineChangeCounter;
 
@@ -39,6 +41,8 @@ public class Task implements Comparable<Task> {
 
         this.pointValue = 1 + (int) (Math.random() * 10); //w wersji ostatecznej wartość 10 zostanie zmieniona na wartość przypisaną do statusu.
         this.deadlineChangeCounter = 0;
+        this.sq = subtasks.size();
+        this.subtaskQuantity.set(""+sq);
     }
 
     /**
@@ -51,8 +55,15 @@ public class Task implements Comparable<Task> {
         this.finalised.set(finalised);
         this.subtasks = FXCollections.observableArrayList();
         subtasks.addAll(addedSubtasks);
+
         this.pointValue = pointValue;
         this.deadlineChangeCounter = deadlineChangeCounter;
+        this.sq = subtasks.size();
+        this.subtaskQuantity.set(""+sq);
+    }
+
+    public String getSubtaskQuantity() {
+        return subtaskQuantity.get();
     }
 
     public String getTaskName() {
@@ -106,6 +117,9 @@ public class Task implements Comparable<Task> {
         this.pointValue = value;
     }
 
+    public void setSubtaskQuantity(String subtaskQuantity) {
+        this.subtaskQuantity.set(subtaskQuantity);
+    }
 
     public void editTaskDescription(String opis) {
         this.setDetails(opis);
@@ -179,6 +193,7 @@ public class Task implements Comparable<Task> {
                 for (Task sub : this.subtasks){
                     sub.setPointValue(this.pointValue/this.getSubtasks().size());
                 }
+                System.out.println("Subtask " + dodawane.getTaskName()+ " was added to task " + this.getTaskName());
             } else {
                 System.out.println("Deadline podzadania nie może być później niż zadania nadrzędnego. Odrzucono.");
             }

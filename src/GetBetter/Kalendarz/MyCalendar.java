@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyCalendar {
+public class MyCalendar {  //zmienić na Singleton?
     private static List<MyDay> days;
     private static final String savingFile = "kalendarz.txt";
 
