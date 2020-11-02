@@ -1,6 +1,7 @@
 package GetBetter;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -54,4 +55,6 @@ public class Controller implements Initializable {
     }
 
 
+    public void handleTaskStatisticsButtonClick(ActionEvent event) {
+    }
 }

@@ -1,6 +1,6 @@
 package GetBetter.Kalendarz;
 
-import GetBetter.DoZrobienia.Task;
+import GetBetter.DoZrobienia.CustomTask;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyCalendar {
+public class MyCalendar {  //zmienić na Singleton?
     private static List<MyDay> days;
     private static final String savingFile = "kalendarz.txt";
 
@@ -72,14 +72,14 @@ public class MyCalendar {
                     MyDay entry = new MyDay(date);
                     days.add(entry);
                 }else if(splitLine[0].equals("Podzadanie")){
-                    List<Task> subtasks = new ArrayList<>();
-                    Task subtaskToAdd = new Task(splitLine[1], splitLine[2],Integer.parseInt(splitLine[3]),LocalDate.parse(splitLine[4]),
+                    List<CustomTask> subtasks = new ArrayList<>();
+                    CustomTask subtaskToAdd = new CustomTask(splitLine[1], splitLine[2],Integer.parseInt(splitLine[3]),LocalDate.parse(splitLine[4]),
                             Boolean.parseBoolean(splitLine[5]),subtasks,Integer.parseInt(splitLine[6]));
-                    List<Task> tasks = days.get((days.size()-1)).getTodaysTasks();
+                    List<CustomTask> tasks = days.get((days.size()-1)).getTodaysTasks();
                     tasks.get((tasks.size()-1)).addSubtask(subtaskToAdd);
                 } else {
-                    List<Task> tasks = new ArrayList<>();
-                    Task taskToAdd = new Task(splitLine[0], splitLine[1],Integer.parseInt(splitLine[2]),LocalDate.parse(splitLine[3]),
+                    List<CustomTask> tasks = new ArrayList<>();
+                    CustomTask taskToAdd = new CustomTask(splitLine[0], splitLine[1],Integer.parseInt(splitLine[2]),LocalDate.parse(splitLine[3]),
                             Boolean.parseBoolean(splitLine[4]),tasks,Integer.parseInt(splitLine[5]));
                     days.get((days.size()-1)).addTask(taskToAdd);
                 }

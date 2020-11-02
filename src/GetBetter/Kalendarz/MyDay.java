@@ -1,6 +1,6 @@
 package GetBetter.Kalendarz;
 
-import GetBetter.DoZrobienia.Task;
+import GetBetter.DoZrobienia.CustomTask;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class MyDay {
     private final LocalDate date;
-    private final ObservableList<Task> todaysTasks;
+    private final ObservableList<CustomTask> todaysTasks;
 
     public MyDay(LocalDate date) {
         this.date = date;
@@ -20,18 +20,18 @@ public class MyDay {
         return date;
     }
 
-    public ObservableList<Task> getTodaysTasks() {
+    public ObservableList<CustomTask> getTodaysTasks() {
         return todaysTasks;
     }
-    private boolean findTask(Task szukane) {
-        for(Task task : todaysTasks) {
+    private boolean findTask(CustomTask szukane) {
+        for(CustomTask task : todaysTasks) {
             if (szukane.equals(task)) {
                 return true;
             }
         }
         return false;
     }
-    public void addTask(Task newTask) {
+    public void addTask(CustomTask newTask) {
         if(findTask(newTask)) {
             System.out.println("Zadanie " + newTask.getTaskName() + " jest już zapisane w tym dniu. Operacja odrzucona");
         } else {
@@ -43,7 +43,7 @@ public class MyDay {
             }
         }
     }
-    public boolean removeTask(Task taskToDelete) {
+    public boolean removeTask(CustomTask taskToDelete) {
         if(todaysTasks.isEmpty()){
             System.out.println("Lista zadań na dzień " + this.getDate() + " jest pusta, skasowania zadania niemożliwe. Zarzucono.");
             return false;
@@ -69,7 +69,7 @@ public class MyDay {
         if(todaysTasks.isEmpty()) {
             return sb.toString();
         } else {
-            for(Task task : todaysTasks){
+            for(CustomTask task : todaysTasks){
                 sb.append(task.toString());
                 sb.append("\n");
             }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<DialogPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GetBetter.Kalendarz.EditTaskDialogController">
+<headerText>
+    Use this window to EDIT chosen task.
+</headerText>
+<content>
+    
+</content>
+   <content>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="taskNameLabel" layoutX="20.0" layoutY="14.0" prefHeight="29.0" prefWidth="563.0" text="Label" />
+            <Label fx:id="taskDeadlineLabel" layoutX="17.0" layoutY="257.0" prefHeight="33.0" prefWidth="570.0" text="Label" />
+            <TextField fx:id="taskDetailsText" layoutX="21.0" layoutY="69.0" prefHeight="176.0" prefWidth="561.0" />
+            <DatePicker fx:id="ETDatePicker" layoutX="16.0" layoutY="290.0" prefHeight="35.0" prefWidth="576.0" />
+         </children>
+      </AnchorPane>
+   </content>
+
+</DialogPane>
