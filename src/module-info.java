@@ -7,4 +7,5 @@ module GetBetter {
     opens GetBetter;
     opens GetBetter.Kalendarz;
     opens GetBetter.DoZrobienia;
+    opens GetBetter.Dziennik;
 }

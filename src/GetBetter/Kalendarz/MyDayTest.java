@@ -1,6 +1,6 @@
 package GetBetter.Kalendarz;
 
-import GetBetter.DoZrobienia.Task;
+import GetBetter.DoZrobienia.CustomTask;
 
 import java.time.LocalDate;
 
@@ -13,10 +13,10 @@ class MyDayTest {
     @org.junit.jupiter.api.BeforeEach
     public void setup() {
         test = new MyDay(LocalDate.now());
-        Task task1 = new  Task("nazwa1", "opis1", LocalDate.now().plusDays(3));
-        Task task3 = new  Task("nazwa3", "opis3", LocalDate.now().plusDays(3));
-        Task task4 = new  Task("nazwa4", "opis4", LocalDate.now().plusDays(3));
-        Task subtask1 = new Task("podzadanie1", "opis podzadanie 1", LocalDate.now());
+        CustomTask task1 = new CustomTask("nazwa1", "opis1", LocalDate.now().plusDays(3));
+        CustomTask task3 = new CustomTask("nazwa3", "opis3", LocalDate.now().plusDays(3));
+        CustomTask task4 = new CustomTask("nazwa4", "opis4", LocalDate.now().plusDays(3));
+        CustomTask subtask1 = new CustomTask("podzadanie1", "opis podzadanie 1", LocalDate.now());
         test.addTask(task1);
         test.addTask(task3);
         test.addTask(task4);
@@ -32,9 +32,9 @@ class MyDayTest {
     @org.junit.jupiter.api.Test
     void addTask() {
         int initialNumberTasks = test.getTodaysTasks().size();
-        Task task1 = new  Task("nazwa4", "opis1", LocalDate.now().plusDays(3));
-        Task task3 = new  Task("nazwa35", "opis35", LocalDate.now().plusDays(3));
-        Task task4 = new  Task("nazwa55", "opis55", LocalDate.now().plusDays(3));
+        CustomTask task1 = new CustomTask("nazwa4", "opis1", LocalDate.now().plusDays(3));
+        CustomTask task3 = new CustomTask("nazwa35", "opis35", LocalDate.now().plusDays(3));
+        CustomTask task4 = new CustomTask("nazwa55", "opis55", LocalDate.now().plusDays(3));
         test.addTask(task1);
         test.addTask(task3);
         test.addTask(task4);
@@ -45,9 +45,9 @@ class MyDayTest {
     void addTask_Alreadyin() {
         int initialNumberTasks = test.getTodaysTasks().size();
 
-        Task task1 = new  Task("nazwa1", "opis1", LocalDate.now().plusDays(3));
-        Task task3 = new  Task("nazwa3", "opis3", LocalDate.now().plusDays(3));
-        Task task4 = new  Task("nazwa4", "opis4", LocalDate.now().plusDays(3));
+        CustomTask task1 = new CustomTask("nazwa1", "opis1", LocalDate.now().plusDays(3));
+        CustomTask task3 = new CustomTask("nazwa3", "opis3", LocalDate.now().plusDays(3));
+        CustomTask task4 = new CustomTask("nazwa4", "opis4", LocalDate.now().plusDays(3));
         test.addTask(task1);
         test.addTask(task3);
         test.addTask(task4);
@@ -57,12 +57,12 @@ class MyDayTest {
     void addSubTask() {
         String s = test.getTodaysTasks().get(0).toString();
         System.out.println(s);
-        Task task2 = new  Task("nazwa2", "opis2", LocalDate.now().plusDays(3));
+        CustomTask task2 = new CustomTask("nazwa2", "opis2", LocalDate.now().plusDays(3));
         test.getTodaysTasks().get(0).addSubtask(task2);
         String s2 = test.getTodaysTasks().get(0).toString();
         System.out.println(s2);
         assertNotEquals(s2, s);
-        Task task6 = new  Task("nazwa6", "opis6", LocalDate.now().plusDays(3));
+        CustomTask task6 = new CustomTask("nazwa6", "opis6", LocalDate.now().plusDays(3));
         test.getTodaysTasks().get(0).addSubtask(task6);
         String s6 = test.getTodaysTasks().get(0).toString();
         System.out.println(s2+"\n" + s6);
@@ -75,7 +75,7 @@ class MyDayTest {
 
     void removeTask() {
         int initialSize = test.getTodaysTasks().size();
-        Task task1 = new  Task("nazwa1", "opis1", LocalDate.now().plusDays(3));
+        CustomTask task1 = new CustomTask("nazwa1", "opis1", LocalDate.now().plusDays(3));
         test.removeTask(task1);
         assertEquals(initialSize-1, test.getTodaysTasks().size());
     }
@@ -83,7 +83,7 @@ class MyDayTest {
     @org.junit.jupiter.api.Test
     void removeNonExistentTask() {
         int initialSize = test.getTodaysTasks().size();
-        Task task7 = new  Task("nazwa7", "opis7", LocalDate.now().plusDays(9));
+        CustomTask task7 = new CustomTask("nazwa7", "opis7", LocalDate.now().plusDays(9));
         test.removeTask(task7);
         assertEquals(initialSize, test.getTodaysTasks().size());
     }
@@ -93,7 +93,7 @@ class MyDayTest {
         test.getTodaysTasks().clear();
         int initialSize = test.getTodaysTasks().size();
         System.out.println("Initial size = " + initialSize);
-        Task task1 = new  Task("nazwa1", "opis1", LocalDate.now().plusDays(3));
+        CustomTask task1 = new CustomTask("nazwa1", "opis1", LocalDate.now().plusDays(3));
         assertFalse(test.removeTask(task1));
     }
 

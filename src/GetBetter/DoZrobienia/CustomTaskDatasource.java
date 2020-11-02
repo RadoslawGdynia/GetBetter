@@ -2,11 +2,20 @@ package GetBetter.DoZrobienia;
 
 import java.sql.*;
 
-public class TaskDatasource {
+public class CustomTaskDatasource {
 
     public static final String DB_NAME = "tasks.db";
     public static final String CONNECTION_STRING = "jdbc:sqlite:N:\\Programowanie\\GitHub repozytoria\\Repozytoria Online\\GetBetter\\"+DB_NAME;
     private Connection conn;
+    private static CustomTaskDatasource instance = new CustomTaskDatasource();
+
+    private CustomTaskDatasource() {
+
+    }
+
+    public static CustomTaskDatasource getInstance() {
+        return instance;
+    }
 
     public boolean open () {
         try {

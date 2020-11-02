@@ -1,8 +1,9 @@
 package GetBetter;
 
-import GetBetter.DoZrobienia.TaskDatasource;
+import GetBetter.DoZrobienia.CustomTaskDatasource;
 import GetBetter.Kalendarz.MyCalendar;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,11 +15,11 @@ public class Main extends Application {
 
     @Override
     public void init() throws Exception {
-        MyCalendar.loadCalendar();
-        TaskDatasource td = new TaskDatasource();
-        if(!td.open()){
-            System.out.println("Could not open datasource");
+        if(!CustomTaskDatasource.getInstance().open()) {
+            System.out.println("FATAL ERROR during load of database"); //zmienić na okno dialogowe
+            Platform.exit();
         }
+        MyCalendar.loadCalendar();
     }
 
     @Override
@@ -41,5 +42,6 @@ public class Main extends Application {
 
     @Override
     public void stop() throws Exception {
+        CustomTaskDatasource.getInstance().close();
     }
 }

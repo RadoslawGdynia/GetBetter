@@ -1,6 +1,6 @@
 package GetBetter.Kalendarz;
 
-import GetBetter.DoZrobienia.Task;
+import GetBetter.DoZrobienia.CustomTask;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -29,14 +30,15 @@ public class MyCalendarController {
 
 
     //GENERAL:
-    private List<TreeItem<Task>> treeItemsList = new ArrayList<>();
+    private List<TreeItem<CustomTask>> treeItemsList = new ArrayList<>();
     private int currentMonthNum;
     private int currentYearNum;
     private int currentDayNum;
     private MyDay selectedDay = MyCalendar.getDays().get(MyCalendar.getDayIndex(LocalDate.now()));
-    private Task selectedTask;
+    private CustomTask selectedTask;
 
     //CALENDAR
+
     @FXML
     private Label monthName;
     @FXML
@@ -55,7 +57,7 @@ public class MyCalendarController {
         @FXML
         private Label showDay;
         @FXML
-        private ComboBox<Task> taskSelectionCombo;
+        private ComboBox<CustomTask> taskSelectionCombo;
         @FXML
         private Pane TimePane;
         @FXML
@@ -64,26 +66,34 @@ public class MyCalendarController {
         //Todays tasks
 
         @FXML
-        private TreeTableView<Task> taskListTableView;
+        private TreeTableView<CustomTask> subtasksTreeTable;
         @FXML
-        private TreeTableColumn<Task, String> nameColumn;
+        private TreeTableColumn<CustomTask, String> subtaskNameColumn;
         @FXML
-        private TreeTableColumn<Task, String> deadlineColumn;
+        private TreeTableColumn<CustomTask, String> subtaskDeadlineColumn;
         @FXML
-        private TreeTableColumn<Task, Object> progressColumn;
+        private TreeTableColumn<CustomTask, Integer> subtaskProgressColumn;
 
         @FXML
-        private ListView<Task> taskList;
+        private ListView<CustomTask> taskList;
 
 
         @FXML
-        private TableView<Task> TVTasksTable;
+        private TableView<CustomTask> TVTasksTable;
         @FXML
-        private TableColumn<Task, String> TVTaskName;
+        private TableColumn<CustomTask, String> TVTaskName;
         @FXML
-        private TableColumn<Task, String> TVTaskDeadline;
+        private TableColumn<CustomTask, String> TVTaskDeadline;
         @FXML
-        private TableColumn<Task, String> TVNumberOfSubtasks;
+        private TableColumn<CustomTask, Integer> TVNumberOfSubtasks;
+
+        @FXML
+        Button AddTaskButton;
+        @FXML
+        Button EditTaskButton;
+        @FXML
+        Button DeleteTaskButton;
+
 
 
         //GENERAL METHODS:
@@ -140,7 +150,7 @@ public class MyCalendarController {
         }
         detailsTabPane.setDisable(true);
         configureCalendarPane();
-        System.out.println("Currently chosen day is: " + LocalDate.of(currentYearNum, currentMonthNum, currentDayNum).getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH));
+        System.out.println("Currently chosen month is: " + LocalDate.of(currentYearNum, currentMonthNum, currentDayNum).getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH));
     }
 
     public void handleMonthForward() {
@@ -153,11 +163,19 @@ public class MyCalendarController {
         }
         detailsTabPane.setDisable(true);
         configureCalendarPane();
-        System.out.println("Currently chosen day is: " + LocalDate.of(currentYearNum, currentMonthNum, currentDayNum).getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH));
+        System.out.println("Currently chosen month is: " + LocalDate.of(currentYearNum, currentMonthNum, currentDayNum).getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH));
     }
 
     //DAY DETAILS METHODS:
     //===================
+
+    private void noTaskSelected(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Missing information!");
+        alert.setHeaderText("No task was chosen. Chosen action requires a selected task to be performed.");
+        alert.setContentText("Please select one of the tasks from the list and proceed.");
+        alert.showAndWait();
+    }
 
 
     // A. DAY PLAN METHODS:
@@ -166,45 +184,47 @@ public class MyCalendarController {
 
     // B. TODAYS TASK METHODS:
 
+
     private void configureTasksTable() {
         TVTasksTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         TVTasksTable.setItems(selectedDay.getTodaysTasks());
-        TVTaskName.setCellValueFactory(new PropertyValueFactory<Task, String>("taskName"));
-        TVTaskDeadline.setCellValueFactory(new PropertyValueFactory<Task, String>("deadline"));
-        TVNumberOfSubtasks.setCellValueFactory(new PropertyValueFactory<Task, String>("subtaskQuantity"));
-        selectedTask = TVTasksTable.getSelectionModel().getSelectedItem();
+
+        TVTaskName.setCellValueFactory(new PropertyValueFactory<CustomTask, String>("taskName"));
+        TVTaskDeadline.setCellValueFactory(new PropertyValueFactory<CustomTask, String>("deadline"));
+        TVNumberOfSubtasks.setCellValueFactory(new PropertyValueFactory<CustomTask, Integer>("subtaskQuantity"));
+    }
+    public void handleTaskSelection(MouseEvent mouseEvent) {
+        CustomTask cTask = TVTasksTable.getSelectionModel().getSelectedItem();
+        System.out.println("Currently selected task: " + cTask.getTaskName());
+        subtasksTreeTable.setDisable(false);
+        configureSubtasksTable(cTask);
+        AddTaskButton.setDisable(false);
+        EditTaskButton.setDisable(false);
+        DeleteTaskButton.setDisable(false);
+
     }
 
 
-    public void configureSubtasksTable() {
-        Task task = TVTasksTable.getSelectionModel().getSelectedItem();
-        TreeItem<Task> root = new TreeItem<>();
-        for(Task subtask : task.getSubtasks()){
-            TreeItem<Task> subtree = new TreeItem<>(subtask);
+
+    public void configureSubtasksTable(CustomTask cTask) {
+
+        TreeItem<CustomTask> root = new TreeItem<>(cTask);
+        for(CustomTask subtask : cTask.getSubtasks()){
+            TreeItem<CustomTask> subtree = new TreeItem<>(subtask);
             root.getChildren().add(subtree);
         }
-        taskListTableView.setRoot(root);
+        subtasksTreeTable.setRoot(root);
 
-//        for (Task task : selectedDay.getTodaysTasks()) {
-//            TreeItem<Task> itemToAdd = new TreeItem<>(task);
-//            treeItemsList.add(itemToAdd);
-//            for (Task subtask : task.getSubtasks()) {
-//                TreeItem<Task> subitemToAdd = new TreeItem<>(subtask);
-//                itemToAdd.getChildren().add(subitemToAdd);
-//            }
-//            taskListTableView.setRoot(itemToAdd);
-//        }
-
-        nameColumn.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<Task, String>, ObservableValue<String>>() {
+        subtaskNameColumn.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<CustomTask, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<Task, String> taskStringCellDataFeatures) {
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<CustomTask, String> taskStringCellDataFeatures) {
                 return new SimpleStringProperty(taskStringCellDataFeatures.getValue().getValue().getTaskName());
             }
 
 
         });
 
-        deadlineColumn.setCellValueFactory(taskStringCellDataFeatures -> {
+        subtaskDeadlineColumn.setCellValueFactory(taskStringCellDataFeatures -> {
             if (taskStringCellDataFeatures == null) {
                 return null;
             } else {
@@ -234,61 +254,82 @@ public class MyCalendarController {
         Optional<ButtonType> result = dialog.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             AddTaskDialogController newTaskToAdd = fxmlLoader.getController();
-            Task toAdd = newTaskToAdd.createTask();
+            CustomTask toAdd = newTaskToAdd.createTask();
             selectedDay.addTask(toAdd);
+
         }
 
 
     }
     public void handleAddSubtaskClick(ActionEvent event) {
-        Task task = TVTasksTable.getSelectionModel().getSelectedItem();
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Addition of subtask to task: " + task.getTaskName());
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("AddTaskDialog.fxml"));
+        CustomTask task = TVTasksTable.getSelectionModel().getSelectedItem();
+        if (task == null) {
+            noTaskSelected();
+        } else {
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setTitle("Addition of subtask to task: " + task.getTaskName());
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("AddTaskDialog.fxml"));
 
-        try {
-            dialog.getDialogPane().setContent(fxmlLoader.load());
-        } catch (IOException e) {
-            System.out.println("Could not load the dialog");
-            e.printStackTrace();
-            return;
-        }
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+            try {
+                dialog.getDialogPane().setContent(fxmlLoader.load());
+            } catch (IOException e) {
+                System.out.println("Could not load the dialog");
+                e.printStackTrace();
+                return;
+            }
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
 
-        Optional<ButtonType> result = dialog.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            AddTaskDialogController newTaskToAdd = fxmlLoader.getController();
-            Task toAdd = newTaskToAdd.createTask();
-            task.addSubtask(toAdd);
-            selectedDay.getTodaysTasks().get(selectedDay.getTodaysTasks().size()-1).setSubtaskQuantity(selectedDay.getTodaysTasks().get(selectedDay.getTodaysTasks().size()-1).getSubtasks().size()+"");
+            Optional<ButtonType> result = dialog.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                AddTaskDialogController newTaskToAdd = fxmlLoader.getController();
+                CustomTask toAdd = newTaskToAdd.createTask();
+                task.addSubtask(toAdd);
+            }
         }
     }
 
-    public void handleEditTaskClick(ActionEvent event) {
-        if(selectedTask == null){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Missing information!");
-            alert.setHeaderText("No task to edit was chosen.");
-            alert.setContentText("Please select one of the tasks from the list and proceed.");
-            alert.showAndWait();
+    public void handleEditTaskClick() {
+        CustomTask task = TVTasksTable.getSelectionModel().getSelectedItem();
+        if(task == null){
+            noTaskSelected();
             return;
         } else {
+            EditTaskDialogController.setSelectedTask(task);
 
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setTitle("Editing task: " + task.getTaskName());
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("EditTaskDialog.fxml"));
 
+            try {
+                dialog.getDialogPane().setContent(fxmlLoader.load());
+            } catch (IOException e) {
+                System.out.println("Could not load the dialog");
+                e.printStackTrace();
+                return;
+            }
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.APPLY);
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
+            EditTaskDialogController ETDialogController = fxmlLoader.getController();
+
+            Optional<ButtonType> result = dialog.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.APPLY) {
+               ETDialogController.handleApplyChangesButton();
+
+            }
         }
-
-
     }
 
     public void handleDeleteTaskClick(ActionEvent event) {
 
-        Task task = TVTasksTable.getSelectionModel().getSelectedItem();
+        CustomTask task = TVTasksTable.getSelectionModel().getSelectedItem();
         deleteTask(task);
     }
 
-    public void deleteTask(Task t) {
+    public void deleteTask(CustomTask t) {
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
         a.setTitle("Task deletion");
         a.setHeaderText("You intend to delete task: " + t.getTaskName());
@@ -337,10 +378,10 @@ public class MyCalendarController {
             showDay.setText("Plans for: " + this.display);
             detailsTabPane.setDisable(false);
           configureTasksTable();
-          configureSubtasksTable();
+          subtasksTreeTable.refresh();
+          subtasksTreeTable.setDisable(true);
         }
     }
-
 }
 
 
