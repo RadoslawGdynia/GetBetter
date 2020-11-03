@@ -1,6 +1,6 @@
 package GetBetter.Kalendarz;
 
-import GetBetter.DoZrobienia.CustomTask;
+import GetBetter.DoZrobienia.MyTask;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -72,14 +72,14 @@ public class MyCalendar {  //zmienić na Singleton?
                     MyDay entry = new MyDay(date);
                     days.add(entry);
                 }else if(splitLine[0].equals("Podzadanie")){
-                    List<CustomTask> subtasks = new ArrayList<>();
-                    CustomTask subtaskToAdd = new CustomTask(splitLine[1], splitLine[2],Integer.parseInt(splitLine[3]),LocalDate.parse(splitLine[4]),
+                    List<MyTask> subtasks = new ArrayList<>();
+                    MyTask subtaskToAdd = new MyTask(splitLine[1], splitLine[2],Integer.parseInt(splitLine[3]),LocalDate.parse(splitLine[4]),
                             Boolean.parseBoolean(splitLine[5]),subtasks,Integer.parseInt(splitLine[6]));
-                    List<CustomTask> tasks = days.get((days.size()-1)).getTodaysTasks();
+                    List<MyTask> tasks = days.get((days.size()-1)).getTodaysTasks();
                     tasks.get((tasks.size()-1)).addSubtask(subtaskToAdd);
                 } else {
-                    List<CustomTask> tasks = new ArrayList<>();
-                    CustomTask taskToAdd = new CustomTask(splitLine[0], splitLine[1],Integer.parseInt(splitLine[2]),LocalDate.parse(splitLine[3]),
+                    List<MyTask> tasks = new ArrayList<>();
+                    MyTask taskToAdd = new MyTask(splitLine[0], splitLine[1],Integer.parseInt(splitLine[2]),LocalDate.parse(splitLine[3]),
                             Boolean.parseBoolean(splitLine[4]),tasks,Integer.parseInt(splitLine[5]));
                     days.get((days.size()-1)).addTask(taskToAdd);
                 }

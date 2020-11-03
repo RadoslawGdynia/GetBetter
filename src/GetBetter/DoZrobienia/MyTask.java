@@ -15,14 +15,14 @@ import java.util.Objects;
 /**
  * Object <code>CustomTask</code> represents things to do.
  */
-public class CustomTask implements Comparable<CustomTask> {
+public class MyTask implements Comparable<MyTask> {
 
     //Visible properties
-    private final SimpleStringProperty taskName = new SimpleStringProperty("");
+    private SimpleStringProperty taskName = new SimpleStringProperty("");
     private SimpleStringProperty details = new SimpleStringProperty("");
     private LocalDate deadline;
     private SimpleBooleanProperty finalised = new SimpleBooleanProperty();
-    private ObservableList<CustomTask> subtasks;
+    private ObservableList<MyTask> subtasks;
     private SimpleIntegerProperty subtaskQuantity = new SimpleIntegerProperty(0);
 
     //Hidden properties
@@ -33,22 +33,25 @@ public class CustomTask implements Comparable<CustomTask> {
     /**
      * Creates new Task Object in the program. Only some fields are possible for user to specify, others are internally specified
      */
-    public CustomTask(String taskName, String details, LocalDate deadline) {
+    public MyTask(String taskName, String details, LocalDate deadline) {
         this.taskName.set(taskName);
         this.details.set(details);
         this.deadline = deadline;
         this.finalised.set(false);
         this.subtasks = FXCollections.observableArrayList();
 
+
+
         this.pointValue = 1 + (int) (Math.random() * 10); //w wersji ostatecznej wartość 10 zostanie zmieniona na wartość przypisaną do statusu.
         this.deadlineChangeCounter = 0;
+        this.setSubtaskQuantity(subtasks.size());
 
     }
 
     /**
      * Constructor with all fields being specified is necessary for loading the data from the file and recreating previous list.
      */
-    public CustomTask(String taskName, String details, int pointValue, LocalDate deadline, boolean finalised, List<CustomTask> addedSubtasks, int deadlineChangeCounter) {
+    public MyTask(String taskName, String details, int pointValue, LocalDate deadline, boolean finalised, List<MyTask> addedSubtasks, int deadlineChangeCounter) {
         this.taskName.set(taskName);
         this.details.set(details);
         this.deadline = deadline;
@@ -58,6 +61,7 @@ public class CustomTask implements Comparable<CustomTask> {
 
         this.pointValue = pointValue;
         this.deadlineChangeCounter = deadlineChangeCounter;
+        this.subtaskQuantity.set(subtasks.size());
 
     }
 
@@ -81,7 +85,7 @@ public class CustomTask implements Comparable<CustomTask> {
         return finalised.get();
     }
 
-    public ObservableList<CustomTask> getSubtasks() {
+    public ObservableList<MyTask> getSubtasks() {
         return subtasks;
     }
 
@@ -97,9 +101,9 @@ public class CustomTask implements Comparable<CustomTask> {
         this.subtaskQuantity.set(subtaskQuantity);
     }
 
-    public void setFinalised(boolean done) {
+    private void setFinalised(boolean done) {
         if (done) {
-            for(CustomTask sub: subtasks){
+            for(MyTask sub: subtasks){
                if(!sub.getFinalised()){
                    System.out.println("Jedno lub więcej podzadań jest nieukończonych. Zakończ najpierw wszystkie podzadania by zamknąć zadanie.");
                    return;
@@ -120,9 +124,12 @@ public class CustomTask implements Comparable<CustomTask> {
         this.pointValue = value;
     }
 
-    public void editTaskDescription(String opis) {
-        this.setDetails(opis);
+    public void editTaskName(String name) {
+        this.taskName.set(name);
+    }
 
+    public void editTaskDescription(String description) {
+        this.setDetails(description);
     }
 
     /**
@@ -133,8 +140,10 @@ public class CustomTask implements Comparable<CustomTask> {
      */
     public void editTaskDeadline(LocalDate date) {
         if (this.deadlineChangeCounter <= 3) {
-            System.out.println("Data deadline została zmieniona na " + date.toString() + ". Ilość możliwych do przeprowadzenia zmian: " + (3 - deadlineChangeCounter));
             this.deadlineChangeCounter++;
+            this.setDeadline(date);
+            System.out.println("Data deadline została zmieniona na " + date.toString() + ". Ilość możliwych do przeprowadzenia zmian: " + (3 - deadlineChangeCounter));
+
         } else {
             System.out.println("Przekroczono maksymalną liczbę zmian deadline. Operacja odrzucona.");
         }
@@ -164,7 +173,7 @@ public class CustomTask implements Comparable<CustomTask> {
 
         StringBuilder textSubtasks = new StringBuilder();
         if (subtasks.size() > 0) {
-            for (CustomTask sub : subtasks) {
+            for (MyTask sub : subtasks) {
                 textSubtasks.append("\nPodzadanie;");
                 textSubtasks.append(sub.toString());
                 textSubtasks.append(";");
@@ -178,9 +187,9 @@ public class CustomTask implements Comparable<CustomTask> {
     /**
      *
      */
-    public void addSubtask(CustomTask dodawane) {
+    public void addSubtask(MyTask dodawane) {
         try {
-            for (CustomTask sub : this.subtasks) {
+            for (MyTask sub : this.subtasks) {
                 if (sub.equals(dodawane)) {
                     System.out.println("Zadanie " + this.getTaskName() + " już zawiera " + dodawane.getTaskName() +
                             "\nOperacja przerwana.");
@@ -189,11 +198,11 @@ public class CustomTask implements Comparable<CustomTask> {
             }
             if (dodawane.getDeadline().isBefore(this.getDeadline()) || dodawane.getDeadline().equals(this.getDeadline())) {
                 this.subtasks.add(dodawane);
-                for (CustomTask sub : this.subtasks){
+                for (MyTask sub : this.subtasks){
                     sub.setPointValue(this.pointValue/this.getSubtasks().size());
                 }
                 System.out.println("Subtask " + dodawane.getTaskName()+ " was added to task " + this.getTaskName());
-                this.subtaskQuantity.add(1);
+                this.setSubtaskQuantity((subtaskQuantity.get()+1));
             } else {
                 System.out.println("Deadline podzadania nie może być później niż zadania nadrzędnego. Odrzucono.");
             }
@@ -207,13 +216,13 @@ public class CustomTask implements Comparable<CustomTask> {
     /**
      * Method allows to remove the subtask from list of subtasks of this Task.
      */
-    public void cancelSubtask(CustomTask kasowane) {
+    public void cancelSubtask(MyTask kasowane) {
         try {
             int initialSubtasksNumber = this.getSubtasks().size();
             if (this.subtasks.isEmpty()) {
                 System.out.println("Lista podzadań tego zadania jest pusta. Nie można skasować podzadania. Odrzucono.");
             } else {
-                for (CustomTask ver : this.subtasks) {
+                for (MyTask ver : this.subtasks) {
                     if (kasowane.equals(ver)) {
                         this.subtasks.remove(ver);
                         System.out.println("Podzadanie " + kasowane.getTaskName() + " zostało skasowane z zadania " + this.getTaskName());
@@ -240,8 +249,8 @@ public class CustomTask implements Comparable<CustomTask> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CustomTask)) return false;
-        CustomTask task = (CustomTask) o;
+        if (!(o instanceof MyTask)) return false;
+        MyTask task = (MyTask) o;
         return this.deadlineChangeCounter == task.deadlineChangeCounter &&
                 this.taskName.equals(task.taskName) &&
                 Objects.equals(this.details, task.details) &&
@@ -253,7 +262,7 @@ public class CustomTask implements Comparable<CustomTask> {
      * possibility of stating a status of task, which will describe its importance.
      */
     @Override
-    public int compareTo(CustomTask o) {
+    public int compareTo(MyTask o) {
         int timeForThis = LocalDate.now().compareTo(this.getDeadline());
         int timeForO = LocalDate.now().compareTo(o.getDeadline());
         return Integer.compare(timeForThis, timeForO);
