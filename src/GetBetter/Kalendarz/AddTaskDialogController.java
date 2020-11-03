@@ -1,6 +1,6 @@
 package GetBetter.Kalendarz;
 
-import GetBetter.DoZrobienia.CustomTask;
+import GetBetter.DoZrobienia.MyTask;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
@@ -16,10 +16,10 @@ public class AddTaskDialogController {
     @FXML
     DatePicker deadlineDate;
 
-    public CustomTask createTask(){
+    public MyTask createTask(){
         String name = taskName.getText().trim();
         String description = details.getText().trim();
         LocalDate deadline = deadlineDate.getValue();
-        return new CustomTask(name,description,deadline);
+        return new MyTask(name,description,deadline);
     }
 }

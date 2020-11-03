@@ -1,6 +1,6 @@
 package GetBetter.Kalendarz;
 
-import GetBetter.DoZrobienia.CustomTask;
+import GetBetter.DoZrobienia.MyTask;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -21,21 +21,19 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class MyCalendarController {
 
 
     //GENERAL:
-    private List<TreeItem<CustomTask>> treeItemsList = new ArrayList<>();
     private int currentMonthNum;
     private int currentYearNum;
     private int currentDayNum;
     private MyDay selectedDay = MyCalendar.getDays().get(MyCalendar.getDayIndex(LocalDate.now()));
-    private CustomTask selectedTask;
+    private Predicate<LocalDate> monthCheck;
 
     //CALENDAR
 
@@ -57,7 +55,7 @@ public class MyCalendarController {
         @FXML
         private Label showDay;
         @FXML
-        private ComboBox<CustomTask> taskSelectionCombo;
+        private ComboBox<MyTask> taskSelectionCombo;
         @FXML
         private Pane TimePane;
         @FXML
@@ -65,27 +63,28 @@ public class MyCalendarController {
 
         //Todays tasks
 
-        @FXML
-        private TreeTableView<CustomTask> subtasksTreeTable;
-        @FXML
-        private TreeTableColumn<CustomTask, String> subtaskNameColumn;
-        @FXML
-        private TreeTableColumn<CustomTask, String> subtaskDeadlineColumn;
-        @FXML
-        private TreeTableColumn<CustomTask, Integer> subtaskProgressColumn;
+        ProgressBar completion = new ProgressBar();
 
-        @FXML
-        private ListView<CustomTask> taskList;
 
 
         @FXML
-        private TableView<CustomTask> TVTasksTable;
+        private TreeTableView<MyTask> subtasksTreeTable;
         @FXML
-        private TableColumn<CustomTask, String> TVTaskName;
+        private TreeTableColumn<MyTask, String> subtaskNameColumn;
         @FXML
-        private TableColumn<CustomTask, String> TVTaskDeadline;
+        private TreeTableColumn<MyTask, String> subtaskDeadlineColumn;
         @FXML
-        private TableColumn<CustomTask, Integer> TVNumberOfSubtasks;
+        private TreeTableColumn<MyTask, ProgressBar> subtaskProgressColumn;
+
+
+        @FXML
+        private TableView<MyTask> TVTasksTable;
+        @FXML
+        private TableColumn<MyTask, String> TVTaskName;
+        @FXML
+        private TableColumn<MyTask, String> TVTaskDeadline;
+        @FXML
+        private TableColumn<MyTask, Integer> TVNumberOfSubtasks;
 
         @FXML
         Button AddTaskButton;
@@ -105,6 +104,16 @@ public class MyCalendarController {
         currentYearNum = selectedDay.getDate().getYear();
         currentDayNum = selectedDay.getDate().getDayOfMonth();
         configureCalendarPane();
+
+
+    }
+
+    public int getCurrentMonthNum() {
+        return currentMonthNum;
+    }
+
+    public int getCurrentYearNum() {
+        return currentYearNum;
     }
     //CALENDAR AREA METHODS:
     //=====================
@@ -123,23 +132,21 @@ public class MyCalendarController {
         for (int i = 1; i <= NUM_OF_TILES; i++) {
 
             String idString = "CalendarTile" + i;
-            DayField dayField;
-
+            CalendarTile configurableTile;
+            String display = (i - (firstDayOfMonth - 1))+"";
             if ((i >= firstDayOfMonth) && (i < (numberOfDaysInCurrentMonth + firstDayOfMonth))) {
-                String display = "" + (i - (firstDayOfMonth - 1));
-                dayField = new DayField(daysTilePane, idString, display, size, size);
 
+                configurableTile = new CalendarTile(daysTilePane, idString, display, size, size);
 
             } else {
-
-                dayField = new DayField(daysTilePane, idString, "", size, size);
-                dayField.setDisable(true);
-                dayField.setVisible(false);
-
-
+                configurableTile = new CalendarTile(daysTilePane, idString, display, size, size);
+                configurableTile.setDisable(true);
+                configurableTile.setVisible(false);
             }
+
         }
     }
+
     public void handleMonthBack() {
         daysTilePane.getChildren().clear();
         if (currentMonthNum == 1) {
@@ -179,6 +186,52 @@ public class MyCalendarController {
 
 
     // A. DAY PLAN METHODS:
+    public void configuteTimeTiles() {
+        final int TILES_NUMBER = 72;
+        int hour1 = 6;
+        int hour2 = 6;
+        int minutes1 = 0;
+        int minutes2 = 15;
+        final int minutesIncrement = 15;
+        StringBuilder text = new StringBuilder();
+
+        for(int i =1; i<=TILES_NUMBER; i++){
+            text.append(hour1);
+            text.append(":");
+            text.append(minutes1);
+            if(minutes1==0) text.append(0);
+            text.append("-");
+            text.append(hour2);
+            text.append(":");
+            text.append(minutes2);
+            if(minutes2==0) text.append(0);
+
+            TimeTile tile = new TimeTile(TimePane,text.toString(), 100, (int)(TimePane.getHeight()/TILES_NUMBER));
+
+
+            minutes1+=minutesIncrement;
+            minutes2+=minutesIncrement;
+
+            if(minutes1==60){
+                hour1++;
+                minutes1=0;
+            }
+            if(minutes2 == 60){
+                hour2++;
+                minutes2=0;
+            }
+
+            text.delete(0, text.length());
+        }
+
+    }
+    public void configurePlanTiles() {
+        final int TILES_NUMBER = 72;
+        for(int i =1; i<=TILES_NUMBER; i++) {
+            PlanTile planTile = new PlanTile(PlanningPane, "Plan", 200, 9);
+        }
+
+    }
 
 
 
@@ -187,17 +240,18 @@ public class MyCalendarController {
 
     private void configureTasksTable() {
         TVTasksTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        TVTaskName.setCellValueFactory(new PropertyValueFactory<MyTask, String>("taskName"));
+        TVTaskDeadline.setCellValueFactory(new PropertyValueFactory<MyTask, String>("deadline"));
+        TVNumberOfSubtasks.setCellValueFactory(new PropertyValueFactory<MyTask, Integer>("subtaskQuantity"));
+
         TVTasksTable.setItems(selectedDay.getTodaysTasks());
 
-        TVTaskName.setCellValueFactory(new PropertyValueFactory<CustomTask, String>("taskName"));
-        TVTaskDeadline.setCellValueFactory(new PropertyValueFactory<CustomTask, String>("deadline"));
-        TVNumberOfSubtasks.setCellValueFactory(new PropertyValueFactory<CustomTask, Integer>("subtaskQuantity"));
     }
     public void handleTaskSelection(MouseEvent mouseEvent) {
-        CustomTask cTask = TVTasksTable.getSelectionModel().getSelectedItem();
+        MyTask cTask = TVTasksTable.getSelectionModel().getSelectedItem();
         System.out.println("Currently selected task: " + cTask.getTaskName());
-        subtasksTreeTable.setDisable(false);
-        configureSubtasksTable(cTask);
+      //  subtasksTreeTable.setDisable(false);
+
         AddTaskButton.setDisable(false);
         EditTaskButton.setDisable(false);
         DeleteTaskButton.setDisable(false);
@@ -206,18 +260,12 @@ public class MyCalendarController {
 
 
 
-    public void configureSubtasksTable(CustomTask cTask) {
+    public void configureSubtasksTable() { //MyTask cTask) {
+        TreeItem<MyTask> root = new TreeItem<>();
 
-        TreeItem<CustomTask> root = new TreeItem<>(cTask);
-        for(CustomTask subtask : cTask.getSubtasks()){
-            TreeItem<CustomTask> subtree = new TreeItem<>(subtask);
-            root.getChildren().add(subtree);
-        }
-        subtasksTreeTable.setRoot(root);
-
-        subtaskNameColumn.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<CustomTask, String>, ObservableValue<String>>() {
+        subtaskNameColumn.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<MyTask, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<CustomTask, String> taskStringCellDataFeatures) {
+            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<MyTask, String> taskStringCellDataFeatures) {
                 return new SimpleStringProperty(taskStringCellDataFeatures.getValue().getValue().getTaskName());
             }
 
@@ -231,6 +279,19 @@ public class MyCalendarController {
                 return new SimpleStringProperty(taskStringCellDataFeatures.getValue().getValue().getDeadline().toString());
             }
         });
+
+        for(MyTask task : selectedDay.getTodaysTasks()) {
+           TreeItem<MyTask> listableTask = new TreeItem<>(task);
+
+            for (MyTask subtask : task.getSubtasks()) {
+                TreeItem<MyTask> listableSubtask = new TreeItem<>(subtask);
+                listableTask.getChildren().add(listableSubtask);
+            }
+            root.getChildren().add(listableTask);
+        }
+        subtasksTreeTable.setRoot(root);
+
+
 
     }
 
@@ -254,7 +315,7 @@ public class MyCalendarController {
         Optional<ButtonType> result = dialog.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             AddTaskDialogController newTaskToAdd = fxmlLoader.getController();
-            CustomTask toAdd = newTaskToAdd.createTask();
+            MyTask toAdd = newTaskToAdd.createTask();
             selectedDay.addTask(toAdd);
 
         }
@@ -262,7 +323,7 @@ public class MyCalendarController {
 
     }
     public void handleAddSubtaskClick(ActionEvent event) {
-        CustomTask task = TVTasksTable.getSelectionModel().getSelectedItem();
+        MyTask task = TVTasksTable.getSelectionModel().getSelectedItem();
         if (task == null) {
             noTaskSelected();
         } else {
@@ -284,14 +345,14 @@ public class MyCalendarController {
             Optional<ButtonType> result = dialog.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 AddTaskDialogController newTaskToAdd = fxmlLoader.getController();
-                CustomTask toAdd = newTaskToAdd.createTask();
+                MyTask toAdd = newTaskToAdd.createTask();
                 task.addSubtask(toAdd);
             }
         }
     }
 
     public void handleEditTaskClick() {
-        CustomTask task = TVTasksTable.getSelectionModel().getSelectedItem();
+        MyTask task = TVTasksTable.getSelectionModel().getSelectedItem();
         if(task == null){
             noTaskSelected();
             return;
@@ -325,11 +386,11 @@ public class MyCalendarController {
 
     public void handleDeleteTaskClick(ActionEvent event) {
 
-        CustomTask task = TVTasksTable.getSelectionModel().getSelectedItem();
+        MyTask task = TVTasksTable.getSelectionModel().getSelectedItem();
         deleteTask(task);
     }
 
-    public void deleteTask(CustomTask t) {
+    public void deleteTask(MyTask t) {
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
         a.setTitle("Task deletion");
         a.setHeaderText("You intend to delete task: " + t.getTaskName());
@@ -344,26 +405,45 @@ public class MyCalendarController {
 
 
 
-    class DayField extends StackPane {
+    class CalendarTile extends StackPane {
         private final Pane root;
         private final String ID;
         private String display;
 
-        public DayField(Pane tpane, String id, String display, int xPixels, int yPixels) {
+        public CalendarTile(Pane tpane, String id, String display, int xPixels, int yPixels) {
 
             this.ID = id;
             this.root = tpane;
             this.display = display;
-
-
+            int dayOfMonth = Integer.parseInt(display.trim());
             tpane.getChildren().add(this);
             Rectangle border = new Rectangle(xPixels, yPixels);
-            border.setFill(Color.DARKGREEN);
+
+            if(currentYearNum<LocalDate.now().getYear()){
+                border.setFill(Color.LIGHTGRAY);
+            }
+            else if(getCurrentMonthNum()==LocalDate.now().getMonth().getValue() &&
+            getCurrentYearNum()==LocalDate.now().getYear()) {
+                if (dayOfMonth < LocalDate.now().getDayOfMonth()) {
+                    border.setFill(Color.LIGHTGRAY);
+                } else if (dayOfMonth == LocalDate.now().getDayOfMonth()) {
+                    border.setFill(Color.DARKCYAN);
+                } else {
+                    border.setFill(Color.DARKGREEN);
+                }
+            } else if (getCurrentMonthNum()>LocalDate.now().getMonth().getValue() || getCurrentYearNum()>LocalDate.now().getYear()) {
+                border.setFill(Color.DARKGREEN);
+            } else {
+                border.setFill(Color.LIGHTGRAY);
+            }
+
+
             border.setStroke(Color.BLACK);
             Text text = new Text(display);
             text.setFont(Font.font("Calibri", 30));
             text.setTextAlignment(TextAlignment.CENTER);
             getChildren().addAll(border, text);
+
 
             this.setOnMouseClicked(event -> handleDayClick());
 
@@ -375,11 +455,52 @@ public class MyCalendarController {
                             currentYearNum,
                             currentMonthNum,
                             Integer.parseInt(this.display))));
-            showDay.setText("Plans for: " + this.display);
+            showDay.setText("Plans for: " + selectedDay.getDate());
             detailsTabPane.setDisable(false);
           configureTasksTable();
-          subtasksTreeTable.refresh();
-          subtasksTreeTable.setDisable(true);
+          configureSubtasksTable();
+          configuteTimeTiles();
+          configurePlanTiles();
+        }
+    }
+    class TimeTile extends StackPane {
+        private final Pane root;
+        private String display;
+
+        public TimeTile(Pane tpane,  String display, int xPixels, int yPixels) {
+
+
+            this.root = tpane;
+            this.display = display;
+
+            tpane.getChildren().add(this);
+            Rectangle border = new Rectangle(xPixels, yPixels);
+            border.setFill(Color.LIGHTGRAY);
+            border.setStroke(Color.BLACK);
+            Text text = new Text(display);
+            text.setFont(Font.font("Calibri", 8));
+            text.setTextAlignment(TextAlignment.CENTER);
+            getChildren().addAll(border, text);
+        }
+    }
+    class PlanTile extends StackPane {
+        private final Pane root;
+        private String display;
+
+        public PlanTile(Pane tpane,  String display, int xPixels, int yPixels) {
+
+
+            this.root = tpane;
+            this.display = display;
+
+            tpane.getChildren().add(this);
+            Rectangle border = new Rectangle(xPixels, yPixels);
+            border.setFill(Color.GHOSTWHITE);
+            border.setStroke(Color.BLACK);
+            Text text = new Text(display);
+            text.setFont(Font.font("Calibri", 8));
+            text.setTextAlignment(TextAlignment.CENTER);
+            getChildren().addAll(border, text);
         }
     }
 }
